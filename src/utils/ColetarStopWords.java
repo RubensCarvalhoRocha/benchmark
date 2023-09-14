@@ -29,13 +29,20 @@ public class ColetarStopWords {
         // Retorna o conjunto stopWords contendo todas as stop words do arquivo.
         return stopWords;
     }
-
+    
+    
+    
+    
+    
+    
+        //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
     public void imprimirStopWords(Set<String> stopWords) {
         for (String palavra : stopWords) {
             System.out.println(palavra);
         }
     }
-
+    
+        //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
     public static void main(String[] args) throws IOException {
         ColetarStopWords coletor = new ColetarStopWords();
         Set<String> stopWords = coletor.coletarStopWords();
