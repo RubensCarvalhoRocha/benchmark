@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
-import bo.ColetarStopWords;
+import bo.ColetaStopWords;
 
 /**
  *
@@ -194,7 +194,7 @@ public class BenchMark extends javax.swing.JFrame {
     
            //Chamando método para coletar as stopwords
       try {
-        ColetarStopWords coletor = new ColetarStopWords(); 
+        ColetaStopWords coletor = new ColetaStopWords(); 
         Set<String> stopWords = coletor.coletarStopWords();
 
         //stopwords no Terminal

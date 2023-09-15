@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ColetarStopWords {
+public class ColetaStopWords {
     public Set<String> coletarStopWords() throws IOException {
         // Cria um conjunto vazio para armazenar as stop words.
         Set<String> stopWords = new HashSet<>();
@@ -44,7 +44,7 @@ public class ColetarStopWords {
     
         //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
     public static void main(String[] args) throws IOException {
-        ColetarStopWords coletor = new ColetarStopWords();
+        ColetaStopWords coletor = new ColetaStopWords();
         Set<String> stopWords = coletor.coletarStopWords();
 
         // Chama o método para imprimir as stop words
