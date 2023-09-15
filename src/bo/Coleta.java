@@ -21,13 +21,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Administrator
  */
 public class Coleta {
- 
-public Set<String> coletarStopWords() throws IOException {
+
+    public Set<String> coletarStopWords() throws IOException {
         // Cria um conjunto vazio para armazenar as stop words.
         Set<String> stopWords = new HashSet<>();
 
         // Início do bloco try-catch para tratamento de exceções de E/S (IOException).
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\WorkSpace\\Faculdade\\EstruturaDeDados2\\benchmarkAVL\\src\\files\\stopwords.txt"))) {
+        try ( BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\arthu\\OneDrive\\Documentos\\Trabalho_luizmario\\benchmark\\src\\Arquivos\\stopwords.txt"))) {
             // Declaração de uma variável para armazenar cada linha do arquivo.
             String linha;
 
@@ -44,15 +44,15 @@ public Set<String> coletarStopWords() throws IOException {
         // Retorna o conjunto stopWords contendo todas as stop words do arquivo.
         return stopWords;
     }
-    
-        //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
+
+    //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
     public void imprimirStopWords(Set<String> stopWords) {
         for (String palavra : stopWords) {
             System.out.println(palavra);
         }
     }
-    
-        //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
+
+    //Apenas para verificar se as stopWords estão sendo buscadas no arquivo:
     public static void main(String[] args) throws IOException {
         Coleta coleta = new Coleta();
         Set<String> stopWords = coleta.coletarStopWords();
@@ -60,71 +60,60 @@ public Set<String> coletarStopWords() throws IOException {
         // Chama o método para imprimir as stop words
         coleta.imprimirStopWords(stopWords);
     }
-    
-    
-    
-public ArrayList<String> coletarPalavras() {
+
+    public ArrayList<String> coletarPalavras() {
         ArrayList<String> palavras = new ArrayList<>();
 
         JFileChooser fileChooser = new JFileChooser();
-
-        // Criar um filtro para permitir apenas arquivos .txt
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Texto (.txt)", "txt");
         fileChooser.setFileFilter(filter);
-
-        // Configurar o JFileChooser para abrir apenas arquivos
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-        // Exibir o diálogo de seleção de arquivo e verificar se o usuário clicou em "Abrir"
-        int result = fileChooser.showOpenDialog(null); // null significa que o diálogo não terá um componente pai
+        int result = fileChooser.showOpenDialog(null);
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            // O usuário selecionou um arquivo
             File selectedFile = fileChooser.getSelectedFile();
 
-            try (FileReader fileReader = new FileReader(selectedFile);
-                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            try ( FileReader fileReader = new FileReader(selectedFile);  BufferedReader bufferedReader = new BufferedReader(fileReader)) {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     StringTokenizer tokenizer = new StringTokenizer(line);
                     while (tokenizer.hasMoreTokens()) {
                         String palavra = tokenizer.nextToken();
-                        // Adicione a palavra à lista
-                        palavras.add(palavra);
+                        // Transformar a palavra em minúsculas e remover sinais de pontuação
+                        palavra = palavra.toLowerCase().replaceAll("[^a-zA-Z]", ""); // Mantém apenas letras
+                        if (!palavra.isEmpty()) { // Certifique-se de que a palavra não está vazia após a filtragem
+                            palavras.add(palavra);
+                        }
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            // O usuário cancelou a seleção de arquivo
             System.out.println("Nenhum arquivo selecionado");
         }
 
-        return palavras;   
-        
+        return palavras;
+
     }
 
+    // Método que recebe uma lista de palavras e um conjunto de stop words e retorna uma lista de palavras limpas.
+    public ArrayList<String> removerStopWords(ArrayList<String> palavras, Set<String> stopWords) {
+        // Cria uma nova ArrayList para armazenar as palavras limpas.
+        ArrayList<String> palavrasLimpas = new ArrayList<>();
 
-   // Método que recebe uma lista de palavras e um conjunto de stop words e retorna uma lista de palavras limpas.
-public ArrayList<String> removerStopWords(ArrayList<String> palavras, Set<String> stopWords) {
-    // Cria uma nova ArrayList para armazenar as palavras limpas.
-    ArrayList<String> palavrasLimpas = new ArrayList<>();
-    
-    // Itera através de cada palavra na lista de entrada 'palavras'.
-    for (String palavra : palavras) {
-        // Verifica se a palavra não está presente no conjunto de stop words antes de adicioná-la às palavras limpas.
+        // Itera através de cada palavra na lista de entrada 'palavras'.
+        for (String palavra : palavras) {
+            // Verifica se a palavra não está presente no conjunto de stop words antes de adicioná-la às palavras limpas.
             if (!stopWords.contains(palavra)) {
-            // Se a palavra não estiver nas stop words, ela é adicionada à lista de palavras limpas.
-            palavrasLimpas.add(palavra);
+                // Se a palavra não estiver nas stop words, ela é adicionada à lista de palavras limpas.
+                palavrasLimpas.add(palavra);
             }
         }
-    
-    // Retorna a lista de palavras limpas após o processamento.
-    return palavrasLimpas;
-    
+
+        // Retorna a lista de palavras limpas após o processamento.
+        return palavrasLimpas;
+
     }
-
-
 
 }
