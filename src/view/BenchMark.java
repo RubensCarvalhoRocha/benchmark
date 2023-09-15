@@ -13,17 +13,10 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
-import bo.ColetaStopWords;
 
-/**
- *
- * @author Administrator
- */
+
 public class BenchMark extends javax.swing.JFrame {
-
-    /**
-     * Creates new form BenchMark
-     */
+   
     public BenchMark() {
         initComponents();
     }
@@ -188,41 +181,27 @@ public class BenchMark extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
-            //Chamando método para coletar as palavras
-    Coleta coleta = new Coleta();
-    ArrayList<String> palavras = coleta.coletarPalavras();
     
-           //Chamando método para coletar as stopwords
-      try {
-        ColetaStopWords coletor = new ColetaStopWords(); 
-        Set<String> stopWords = coletor.coletarStopWords();
+     Coleta coleta = new Coleta();
 
-        //stopwords no Terminal
-    System.out.println("StopWords:");
-    System.out.println("----------------------------------");
-        for (String stopword : stopWords) {
-            // Faça algo com cada palavra
-            System.out.println(stopword);
+    try {
+        // Chamar o método coletarStopWords
+        Set<String> stopWords = coleta.coletarStopWords();
+
+        // Chamar o método coletarPalavras
+        ArrayList<String> palavras = coleta.coletarPalavras();
+
+        // Chamar o método limparPalavras, passando as palavras coletadas e as stop words como argumentos
+        ArrayList<String> palavrasLimpas = coleta.limparPalavras(palavras, stopWords);
+
+
+        // Por exemplo, você pode imprimir as palavras limpas no console:
+        for (String palavraLimpa : palavrasLimpas) {
+            System.out.println(palavraLimpa);
         }
-    System.out.println("----------------------------------");
     } catch (IOException e) {
-        e.printStackTrace();
-    }
-    
-    //palavras do arquivo.txt no Terminal
-    System.out.println("Palavras coletadas do txt:");
-    System.out.println("----------------------------------");
-    for (String palavra : palavras) {
-            System.out.println(palavra);
-        }
-    System.out.println("----------------------------------");
-    
-    
-    //palavra limpas no Terminal'
-    
-    
-    
-    
+    }    
+         
     }//GEN-LAST:event_jButtonImportarActionPerformed
 
     /**
