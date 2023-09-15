@@ -107,7 +107,7 @@ public ArrayList<String> coletarPalavras() {
 
 
    // Método que recebe uma lista de palavras e um conjunto de stop words e retorna uma lista de palavras limpas.
-public ArrayList<String> limparPalavras(ArrayList<String> palavras, Set<String> stopWords) {
+public ArrayList<String> removerStopWords(ArrayList<String> palavras, Set<String> stopWords) {
     // Cria uma nova ArrayList para armazenar as palavras limpas.
     ArrayList<String> palavrasLimpas = new ArrayList<>();
     
