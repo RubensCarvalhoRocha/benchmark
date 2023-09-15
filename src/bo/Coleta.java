@@ -117,6 +117,7 @@ public class Coleta {
 
     }
     
+
     public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasLimpas) {
     HashMap<String, Integer> frequencia = new HashMap<>();
 
