@@ -5,8 +5,10 @@
 package tela;
 
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import utils.ColetarPalavrasLimpas;
 
 /**
  *
@@ -181,28 +183,12 @@ public class BenchMark extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
-     JFileChooser fileChooser = new JFileChooser();
-
-    // Criar um filtro para permitir apenas arquivos .txt
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Texto (.txt)", "txt");
-    fileChooser.setFileFilter(filter);
-
-    // Configurar o JFileChooser para abrir apenas arquivos
-    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-    // Exibir o diálogo de seleção de arquivo e verificar se o usuário clicou em "Abrir"
-    int result = fileChooser.showOpenDialog(this);
-
-    if (result == JFileChooser.APPROVE_OPTION) {
-        // O usuário selecionou um arquivo
-        File selectedFile = fileChooser.getSelectedFile();
-
-        // Aqui você pode fazer o que quiser com o arquivo selecionado, por exemplo, exibir o caminho do arquivo em um JLabel
-        jLabelUrl.setText("Arquivo selecionado: " + selectedFile.getAbsolutePath());
-    } else {
-        // O usuário cancelou a seleção de arquivo
-        jLabelUrl.setText("Nenhum arquivo selecionado");
-    }                // TODO add your handling code here:
+            //Chamando método para coletar as palavras limpas.
+    ColetarPalavrasLimpas coletarPalavrasLimpas = new ColetarPalavrasLimpas();
+    ArrayList<String> palavras = coletarPalavrasLimpas.coletarPalavras();
+    for (String palavra : palavras) {
+            System.out.println(palavra);
+        }
     }//GEN-LAST:event_jButtonImportarActionPerformed
 
     /**
@@ -242,18 +228,14 @@ public class BenchMark extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonImportar;
-    private javax.swing.JButton jButtonImportar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelUrl;
-    private javax.swing.JLabel jLabelUrl1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
