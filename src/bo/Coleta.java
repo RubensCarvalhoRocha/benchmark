@@ -124,4 +124,7 @@ public ArrayList<String> limparPalavras(ArrayList<String> palavras, Set<String> 
     return palavrasLimpas;
     
     }
+
+
+
 }
