@@ -5,10 +5,15 @@
 package tela;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import utils.ColetarPalavrasLimpas;
+import utils.ColetarStopWords;
 
 /**
  *
@@ -186,9 +191,37 @@ public class BenchMark extends javax.swing.JFrame {
             //Chamando método para coletar as palavras limpas.
     ColetarPalavrasLimpas coletarPalavrasLimpas = new ColetarPalavrasLimpas();
     ArrayList<String> palavras = coletarPalavrasLimpas.coletarPalavras();
+    
+           //Chamando método para coletar as stopwords
+      try {
+        ColetarStopWords coletor = new ColetarStopWords();  // Crie uma instância da classe ColetarStopWords
+        Set<String> stopWords = coletor.coletarStopWords();  // Chame o método para obter o conjunto de palavras
+
+        //stopwords no Terminal
+    System.out.println("StopWords:");
+    System.out.println("----------------------------------");
+        for (String stopword : stopWords) {
+            // Faça algo com cada palavra
+            System.out.println(stopword);
+        }
+    System.out.println("----------------------------------");
+    } catch (IOException e) {
+        // Lide com exceções de E/S, se necessário
+        e.printStackTrace();
+    }
+    
+    //palavras do arquivo.txt no Terminal
+    System.out.println("Palavras coletadas do txt:");
+    System.out.println("----------------------------------");
     for (String palavra : palavras) {
             System.out.println(palavra);
         }
+    System.out.println("----------------------------------");
+    
+    
+    //palavra limpas no Terminal'
+    
+    
     }//GEN-LAST:event_jButtonImportarActionPerformed
 
     /**
