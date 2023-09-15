@@ -13,12 +13,13 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
-
+import java.util.HashMap;
 
 public class BenchMark extends javax.swing.JFrame {
-   
+
     public BenchMark() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -181,27 +182,36 @@ public class BenchMark extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
-    
-     Coleta coleta = new Coleta();
 
-    try {
-        // Chamar o método coletarStopWords
-        Set<String> stopWords = coleta.coletarStopWords();
+        Coleta coleta = new Coleta();
 
-        // Chamar o método coletarPalavras
-        ArrayList<String> palavras = coleta.coletarPalavras();
+        try {
+            // Chamar o método coletarStopWords
+            Set<String> stopWords = coleta.coletarStopWords();
 
-        // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-        ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+            // Chamar o método coletarPalavras
+            ArrayList<String> palavras = coleta.coletarPalavras();
 
+            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
+            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
-        // Por exemplo, você pode imprimir as palavras limpas no console:
-        for (String palavraLimpa : palavrasLimpas) {
-            System.out.println(palavraLimpa);
+            // Por exemplo, você pode imprimir as palavras limpas no console:
+            for (String palavraLimpa : palavrasLimpas) {
+                System.out.println(palavraLimpa);
+            }
+            HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasLimpas);
+            System.out.println("");
+            
+
+            System.out.println("Frequência das palavras:");
+            for (String palavra : frequencia.keySet()) {
+                int quantidade = frequencia.get(palavra);
+                System.out.println(palavra + ": " + quantidade);
+            }
+
+        } catch (IOException e) {
         }
-    } catch (IOException e) {
-    }    
-         
+
     }//GEN-LAST:event_jButtonImportarActionPerformed
 
     /**
