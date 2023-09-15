@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -115,5 +116,20 @@ public class Coleta {
         return palavrasLimpas;
 
     }
+    
+    public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasLimpas) {
+    HashMap<String, Integer> frequencia = new HashMap<>();
+
+    for (String palavra : palavrasLimpas) {
+        if (frequencia.containsKey(palavra)) {
+            int count = frequencia.get(palavra);
+            frequencia.put(palavra, count + 1);
+        } else {
+            frequencia.put(palavra, 1);
+        }
+    }
+
+    return frequencia;
+}
 
 }

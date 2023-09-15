@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
+import java.util.HashMap;
 
 
 public class BenchMark extends javax.swing.JFrame {
@@ -199,6 +200,15 @@ public class BenchMark extends javax.swing.JFrame {
         for (String palavraLimpa : palavrasLimpas) {
             System.out.println(palavraLimpa);
         }
+         HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasLimpas);
+         
+          for (String palavra : frequencia.keySet()) {
+            int quantidade = frequencia.get(palavra);
+            System.out.println("Palavra: " + palavra + ", Frequência: " + quantidade);
+        }
+
+        
+        
     } catch (IOException e) {
     }    
          
