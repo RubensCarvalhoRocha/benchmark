@@ -12,8 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import utils.ColetarPalavrasLimpas;
-import utils.ColetarStopWords;
+import bo.Coleta;
+import bo.ColetarStopWords;
 
 /**
  *
@@ -188,14 +188,14 @@ public class BenchMark extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
-            //Chamando método para coletar as palavras limpas.
-    ColetarPalavrasLimpas coletarPalavrasLimpas = new ColetarPalavrasLimpas();
-    ArrayList<String> palavras = coletarPalavrasLimpas.coletarPalavras();
+            //Chamando método para coletar as palavras
+    Coleta coleta = new Coleta();
+    ArrayList<String> palavras = coleta.coletarPalavras();
     
            //Chamando método para coletar as stopwords
       try {
-        ColetarStopWords coletor = new ColetarStopWords();  // Crie uma instância da classe ColetarStopWords
-        Set<String> stopWords = coletor.coletarStopWords();  // Chame o método para obter o conjunto de palavras
+        ColetarStopWords coletor = new ColetarStopWords(); 
+        Set<String> stopWords = coletor.coletarStopWords();
 
         //stopwords no Terminal
     System.out.println("StopWords:");
@@ -206,7 +206,6 @@ public class BenchMark extends javax.swing.JFrame {
         }
     System.out.println("----------------------------------");
     } catch (IOException e) {
-        // Lide com exceções de E/S, se necessário
         e.printStackTrace();
     }
     
@@ -220,6 +219,8 @@ public class BenchMark extends javax.swing.JFrame {
     
     
     //palavra limpas no Terminal'
+    
+    
     
     
     }//GEN-LAST:event_jButtonImportarActionPerformed

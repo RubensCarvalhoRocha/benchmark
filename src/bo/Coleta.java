@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package utils;
+package bo;
 
 import java.awt.List;
 import java.io.BufferedReader;
@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author Administrator
  */
-public class ColetarPalavrasLimpas {
+public class Coleta {
  
 public ArrayList<String> coletarPalavras() {
         ArrayList<String> palavras = new ArrayList<>();
