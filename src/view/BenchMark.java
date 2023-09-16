@@ -187,13 +187,7 @@ public class ArvoreAVL {
 
     // ... (outros códigos da classe ArvoreAVL)
 
-    void imprimirArvore(StringBuilder sb, Node no) {
-        if (no != null) {
-            imprimirArvore(sb, no.esquerda);
-            sb.append(no.palavra).append("\n");
-            imprimirArvore(sb, no.direita);
-        }
-    }
+    
 
     // ... (outros códigos da classe ArvoreAVL)
 
