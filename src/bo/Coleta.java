@@ -121,20 +121,6 @@ public class Coleta {
 
     }
 
-   
-   /* public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasOrdenadas) {
-        ArrayList<String> palavrasOrdenadasList = palavrasOrdenadas.stream().collect(Collectors.toCollection(ArrayList::new));
-
-        HashMap<String, Integer> frequencia = new HashMap<>();
-
-        for (String palavra : palavrasOrdenadasList) {
-            int count = Collections.frequency(palavrasOrdenadas, palavra);
-            frequencia.put(palavra, count);
-        }
-
-        return frequencia;
-    }*/
-
     public ArrayList<String> obterPalavrasLimpasOrdenadas(ArrayList<String> palavrasLimpas) {
         // Copia as palavras limpas para o ArrayList palavrasLimpasOrdenadas
         ArrayList<String> palavrasLimpasOrdenadas = new ArrayList<>(palavrasLimpas);

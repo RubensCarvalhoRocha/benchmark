@@ -204,18 +204,9 @@ public class BenchMark extends javax.swing.JFrame {
             for (String palavraLimpa : palavrasLimpas) {
                 System.out.println(palavraLimpa);
             }
-            //HashMap<String, Integer> frequencia = coleta.contarFrequencia(new TreeSet<>(coleta.palavrasOrdenadas(palavrasLimpas)));
-            // HashMap<String, Integer> frequencia = coleta.contarFrequencia(coleta.palavrasOrdenadas(palavrasLimpas));
-            //ArrayList<String> palavrasOrdenadas = coleta.palavrasOrdenadas(palavrasLimpas);
-            // HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasOrdenadas);
-
+            
             System.out.println("");
 
-            /*System.out.println("Frequência das palavras:");
-            for (String palavra : frequencia.keySet()) {
-                int quantidade = frequencia.get(palavra);
-                System.out.println(palavra + ": " + quantidade);
-            }*/
             ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
             for (String palavra : palavrasLimpasOrdenadas) {
                 System.out.println(palavra);
