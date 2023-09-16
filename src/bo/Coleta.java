@@ -19,6 +19,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import estruturas.FrequenciaPalavra;
 
 /**
  *
@@ -120,43 +121,80 @@ public class Coleta {
 
     }
 
-   public ArrayList<String> palavrasOrdenadas(ArrayList<String> palavrasLimpas) {
-    // Cria um TreeSet para ordenar as palavras
-    TreeSet<String> palavrasOrdenadasSet = new TreeSet<>(palavrasLimpas);
-    
-    // Cria um ArrayList para manter a ordem e permitir duplicatas
-    ArrayList<String> palavrasOrdenadas = new ArrayList<>(palavrasOrdenadasSet);
+   
+   /* public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasOrdenadas) {
+        ArrayList<String> palavrasOrdenadasList = palavrasOrdenadas.stream().collect(Collectors.toCollection(ArrayList::new));
 
-    return palavrasOrdenadas;
-}
-
-
-    /*public HashMap<String, Integer> contarFrequencia(TreeSet<String> palavrasOrdenadas) {
         HashMap<String, Integer> frequencia = new HashMap<>();
 
-        for (String palavra : palavrasOrdenadas) {
-            if (frequencia.containsKey(palavra)) {
-                int count = frequencia.get(palavra);
-                frequencia.put(palavra, count + 1);
-            } else {
-                frequencia.put(palavra, 1);
-            }
+        for (String palavra : palavrasOrdenadasList) {
+            int count = Collections.frequency(palavrasOrdenadas, palavra);
+            frequencia.put(palavra, count);
         }
 
         return frequencia;
     }*/
-  public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasOrdenadas) {
-    ArrayList<String> palavrasOrdenadasList = palavrasOrdenadas.stream().collect(Collectors.toCollection(ArrayList::new));
 
-    HashMap<String, Integer> frequencia = new HashMap<>();
+    public ArrayList<String> obterPalavrasLimpasOrdenadas(ArrayList<String> palavrasLimpas) {
+        // Copia as palavras limpas para o ArrayList palavrasLimpasOrdenadas
+        ArrayList<String> palavrasLimpasOrdenadas = new ArrayList<>(palavrasLimpas);
 
-    for (String palavra : palavrasOrdenadasList) {
-        int count = Collections.frequency(palavrasOrdenadas, palavra);
-        frequencia.put(palavra, count);
+        // Chama o método de ordenação (Quicksort)
+        quickSort(palavrasLimpasOrdenadas, 0, palavrasLimpasOrdenadas.size() - 1);
+
+        return palavrasLimpasOrdenadas;
+    }
+
+    public void quickSort(ArrayList<String> palavras, int inicio, int fim) {
+        if (inicio < fim) {
+            int indicePivo = particionar(palavras, inicio, fim);
+            quickSort(palavras, inicio, indicePivo - 1);
+            quickSort(palavras, indicePivo + 1, fim);
+        }
+    }
+
+    public int particionar(ArrayList<String> palavras, int inicio, int fim) {
+        String pivo = palavras.get(fim);
+        int i = inicio - 1;
+
+        for (int j = inicio; j < fim; j++) {
+            if (palavras.get(j).compareTo(pivo) < 0) {
+                i++;
+                String temp = palavras.get(i);
+                palavras.set(i, palavras.get(j));
+                palavras.set(j, temp);
+            }
+        }
+
+        String temp = palavras.get(i + 1);
+        palavras.set(i + 1, palavras.get(fim));
+        palavras.set(fim, temp);
+
+        return i + 1;
+    }
+    
+    public ArrayList<FrequenciaPalavra> contarFrequencia(ArrayList<String> palavras) {
+    ArrayList<FrequenciaPalavra> frequencia = new ArrayList<>();
+
+    for (String palavra : palavras) {
+        boolean encontrada = false;
+        
+        for (FrequenciaPalavra freq : frequencia) {
+            if (freq.getPalavra().equals(palavra)) {
+                freq.incrementarFrequencia();
+                encontrada = true;
+                break;
+            }
+        }
+        
+        if (!encontrada) {
+            frequencia.add(new FrequenciaPalavra(palavra));
+        }
     }
 
     return frequencia;
 }
+    
 
 
 }

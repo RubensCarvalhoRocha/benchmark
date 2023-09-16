@@ -15,6 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
 import estruturas.ArvoreAVL;
 import estruturas.ArvoreAVL.Node;
+import estruturas.FrequenciaPalavra;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -183,16 +184,7 @@ public class BenchMark extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public class ArvoreAVL {
 
-    // ... (outros códigos da classe ArvoreAVL)
-
-    
-
-    // ... (outros códigos da classe ArvoreAVL)
-
-        
-    }
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
 
@@ -214,26 +206,28 @@ public class ArvoreAVL {
             }
             //HashMap<String, Integer> frequencia = coleta.contarFrequencia(new TreeSet<>(coleta.palavrasOrdenadas(palavrasLimpas)));
             // HashMap<String, Integer> frequencia = coleta.contarFrequencia(coleta.palavrasOrdenadas(palavrasLimpas));
-            ArrayList<String> palavrasOrdenadas = coleta.palavrasOrdenadas(palavrasLimpas);
-            HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasOrdenadas);
+            //ArrayList<String> palavrasOrdenadas = coleta.palavrasOrdenadas(palavrasLimpas);
+            // HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasOrdenadas);
 
             System.out.println("");
 
-            System.out.println("Frequência das palavras:");
+            /*System.out.println("Frequência das palavras:");
             for (String palavra : frequencia.keySet()) {
                 int quantidade = frequencia.get(palavra);
                 System.out.println(palavra + ": " + quantidade);
+            }*/
+            ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
+            for (String palavra : palavrasLimpasOrdenadas) {
+                System.out.println(palavra);
+            }
+
+            ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
+            // Agora você pode imprimir a frequência das palavras
+            for (FrequenciaPalavra freq : frequencia) {
+                jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
             }
 
             ArvoreAVL tree = new ArvoreAVL();
-
-// Adicione as palavras limpas à lista 'palavrasLimpas'
-
-            
-            tree.inserirPalavras(palavrasLimpas);
-            StringBuilder sb = new StringBuilder();
-            tree.imprimirArvore(sb, tree.raiz); // A função para imprimir a árvore
-            jTextAreaRelatorioArvoreAVL.setText(sb.toString());
 
         } catch (IOException e) {
         }

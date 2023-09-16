@@ -4,11 +4,14 @@
  */
 package estruturas;
 
+import bo.Coleta;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class ArvoreAVL {
 
     public class Node {
+
         public String palavra;
         int altura;
         public Node esquerda, direita;
@@ -22,8 +25,9 @@ public class ArvoreAVL {
     public Node raiz;
 
     public int altura(Node n) {
-        if (n == null)
+        if (n == null) {
             return 0;
+        }
         return n.altura;
     }
 
@@ -58,31 +62,36 @@ public class ArvoreAVL {
     }
 
     public int getBalance(Node n) {
-        if (n == null)
+        if (n == null) {
             return 0;
+        }
         return altura(n.esquerda) - altura(n.direita);
     }
 
     public Node inserir(Node no, String palavra) {
-        if (no == null)
+        if (no == null) {
             return (new Node(palavra));
+        }
 
-        if (palavra.compareTo(no.palavra) < 0)
+        if (palavra.compareTo(no.palavra) < 0) {
             no.esquerda = inserir(no.esquerda, palavra);
-        else if (palavra.compareTo(no.palavra) > 0)
+        } else if (palavra.compareTo(no.palavra) > 0) {
             no.direita = inserir(no.direita, palavra);
-        else
+        } else {
             return no;
+        }
 
         no.altura = 1 + max(altura(no.esquerda), altura(no.direita));
 
         int balance = getBalance(no);
 
-        if (balance > 1 && palavra.compareTo(no.esquerda.palavra) < 0)
+        if (balance > 1 && palavra.compareTo(no.esquerda.palavra) < 0) {
             return rotacaoDireita(no);
+        }
 
-        if (balance < -1 && palavra.compareTo(no.direita.palavra) > 0)
+        if (balance < -1 && palavra.compareTo(no.direita.palavra) > 0) {
             return rotacaoEsquerda(no);
+        }
 
         if (balance > 1 && palavra.compareTo(no.esquerda.palavra) > 0) {
             no.esquerda = rotacaoEsquerda(no.esquerda);
@@ -104,10 +113,19 @@ public class ArvoreAVL {
             inorder(no.direita);
         }
     }
+    
 
-    public void  inserirPalavras(ArrayList<String> palavras) {
-        for (String palavra : palavras) {
+    public void inserirPalavras(ArrayList<String> palavrasLimpas) {
+         for (String palavra : palavrasLimpas) {
             raiz = inserir(raiz, palavra);
+        }
+    }
+
+    void imprimirArvore(StringBuilder sb, Node no) {
+        if (no != null) {
+            imprimirArvore(sb, no.esquerda);
+            sb.append(no.palavra).append("\n");
+            imprimirArvore(sb, no.direita);
         }
     }
 }
