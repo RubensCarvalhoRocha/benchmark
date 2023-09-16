@@ -10,10 +10,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -116,21 +119,44 @@ public class Coleta {
         return palavrasLimpas;
 
     }
-    
 
-    public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasLimpas) {
+   public ArrayList<String> palavrasOrdenadas(ArrayList<String> palavrasLimpas) {
+    // Cria um TreeSet para ordenar as palavras
+    TreeSet<String> palavrasOrdenadasSet = new TreeSet<>(palavrasLimpas);
+    
+    // Cria um ArrayList para manter a ordem e permitir duplicatas
+    ArrayList<String> palavrasOrdenadas = new ArrayList<>(palavrasOrdenadasSet);
+
+    return palavrasOrdenadas;
+}
+
+
+    /*public HashMap<String, Integer> contarFrequencia(TreeSet<String> palavrasOrdenadas) {
+        HashMap<String, Integer> frequencia = new HashMap<>();
+
+        for (String palavra : palavrasOrdenadas) {
+            if (frequencia.containsKey(palavra)) {
+                int count = frequencia.get(palavra);
+                frequencia.put(palavra, count + 1);
+            } else {
+                frequencia.put(palavra, 1);
+            }
+        }
+
+        return frequencia;
+    }*/
+  public HashMap<String, Integer> contarFrequencia(ArrayList<String> palavrasOrdenadas) {
+    ArrayList<String> palavrasOrdenadasList = palavrasOrdenadas.stream().collect(Collectors.toCollection(ArrayList::new));
+
     HashMap<String, Integer> frequencia = new HashMap<>();
 
-    for (String palavra : palavrasLimpas) {
-        if (frequencia.containsKey(palavra)) {
-            int count = frequencia.get(palavra);
-            frequencia.put(palavra, count + 1);
-        } else {
-            frequencia.put(palavra, 1);
-        }
+    for (String palavra : palavrasOrdenadasList) {
+        int count = Collections.frequency(palavrasOrdenadas, palavra);
+        frequencia.put(palavra, count);
     }
 
     return frequencia;
 }
+
 
 }

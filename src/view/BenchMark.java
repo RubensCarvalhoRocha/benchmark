@@ -13,7 +13,10 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
+import estruturas.ArvoreAVL;
+import estruturas.ArvoreAVL.Node;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 public class BenchMark extends javax.swing.JFrame {
 
@@ -180,6 +183,22 @@ public class BenchMark extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public class ArvoreAVL {
+
+    // ... (outros códigos da classe ArvoreAVL)
+
+    void imprimirArvore(StringBuilder sb, Node no) {
+        if (no != null) {
+            imprimirArvore(sb, no.esquerda);
+            sb.append(no.palavra).append("\n");
+            imprimirArvore(sb, no.direita);
+        }
+    }
+
+    // ... (outros códigos da classe ArvoreAVL)
+
+        
+    }
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
 
@@ -199,15 +218,28 @@ public class BenchMark extends javax.swing.JFrame {
             for (String palavraLimpa : palavrasLimpas) {
                 System.out.println(palavraLimpa);
             }
-            HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasLimpas);
+            //HashMap<String, Integer> frequencia = coleta.contarFrequencia(new TreeSet<>(coleta.palavrasOrdenadas(palavrasLimpas)));
+            // HashMap<String, Integer> frequencia = coleta.contarFrequencia(coleta.palavrasOrdenadas(palavrasLimpas));
+            ArrayList<String> palavrasOrdenadas = coleta.palavrasOrdenadas(palavrasLimpas);
+            HashMap<String, Integer> frequencia = coleta.contarFrequencia(palavrasOrdenadas);
+
             System.out.println("");
-            
 
             System.out.println("Frequência das palavras:");
             for (String palavra : frequencia.keySet()) {
                 int quantidade = frequencia.get(palavra);
                 System.out.println(palavra + ": " + quantidade);
             }
+
+            ArvoreAVL tree = new ArvoreAVL();
+
+// Adicione as palavras limpas à lista 'palavrasLimpas'
+
+            
+            tree.inserirPalavras(palavrasLimpas);
+            StringBuilder sb = new StringBuilder();
+            tree.imprimirArvore(sb, tree.raiz); // A função para imprimir a árvore
+            jTextAreaRelatorioArvoreAVL.setText(sb.toString());
 
         } catch (IOException e) {
         }
