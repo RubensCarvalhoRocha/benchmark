@@ -46,6 +46,12 @@ public class BuscaBinaria {
         }
     }
 
+    public void imprimirPalavras() {
+        for (String palavra : palavrasOrdenadas) {
+            System.out.println(palavra);
+        }
+    }
+
     public void executarColeta() {
         // Suponha que você já tenha o ArrayList de palavras limpas ordenadas
         Coleta coleta = new Coleta(); // Suponha que Coleta seja a classe onde obterPalavrasLimpasOrdenadas está definido
