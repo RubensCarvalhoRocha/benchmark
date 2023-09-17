@@ -52,11 +52,11 @@ public class BuscaBinaria {
         }
     }
 
-    public static void main(String[] args) {
+    public void executarColeta() {
         // Suponha que você já tenha o ArrayList de palavras limpas ordenadas
         Coleta coleta = new Coleta(); // Suponha que Coleta seja a classe onde obterPalavrasLimpasOrdenadas está definido
-       
-        
+        ArrayList<String> palavrasLimpasOrdenadas = null; // Inicialize a variável fora do bloco try-catch
+
         try {
             // Chamar o método coletarStopWords
             Set<String> stopWords = coleta.coletarStopWords();
@@ -67,13 +67,14 @@ public class BuscaBinaria {
             // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
             ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
-	   // Chamar o método obterPalavrasLimpasOrdenadas, passando as palavrasLimpas coletadas. 
-            ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
+            // Chamar o método obterPalavrasLimpasOrdenadas, passando as palavrasLimpas coletadas. 
+            palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
             for (String palavra : palavrasLimpasOrdenadas) {
                 System.out.println(palavra);
             }
 
         } catch (IOException e) {
+            // Trate a exceção, se necessário
         }
 
         // Crie a instância da BuscaBinaria com o ArrayList de palavras limpas ordenadas
