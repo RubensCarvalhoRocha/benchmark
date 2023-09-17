@@ -5,8 +5,10 @@
 package estruturas;
 
 import bo.Coleta;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Set;
 
 public class BuscaBinaria {
         private ArrayList<String> palavrasOrdenadas;
@@ -53,9 +55,28 @@ public class BuscaBinaria {
     public static void main(String[] args) {
         // Suponha que você já tenha o ArrayList de palavras limpas ordenadas
         Coleta coleta = new Coleta(); // Suponha que Coleta seja a classe onde obterPalavrasLimpasOrdenadas está definido
-        ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
+       
+        
+        try {
+            // Chamar o método coletarStopWords
+            Set<String> stopWords = coleta.coletarStopWords();
 
-        // Crie a instância da BuscaBinariaVetorDinamico com o ArrayList de palavras limpas ordenadas
+            // Chamar o método coletarPalavras
+            ArrayList<String> palavras = coleta.coletarPalavras();
+
+            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
+            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+
+	   // Chamar o método obterPalavrasLimpasOrdenadas, passando as palavrasLimpas coletadas. 
+            ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
+            for (String palavra : palavrasLimpasOrdenadas) {
+                System.out.println(palavra);
+            }
+
+        } catch (IOException e) {
+        }
+
+        // Crie a instância da BuscaBinaria com o ArrayList de palavras limpas ordenadas
         BuscaBinaria vetor = new BuscaBinaria(palavrasLimpasOrdenadas);
 
         // Adicione algumas palavras ao vetor
