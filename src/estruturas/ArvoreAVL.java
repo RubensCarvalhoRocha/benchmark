@@ -5,127 +5,140 @@
 package estruturas;
 
 import bo.Coleta;
+//import buscaArvores.SearchResult.SearchResult;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+import javax.naming.directory.SearchResult;
+
+
 
 public class ArvoreAVL {
 
+    public class Tree {
+
+    List<SearchResult> listResult = new ArrayList<>();
+    Map<String, SearchResult> mapa = new HashMap<>();
+
     public class Node {
 
-        public String palavra;
-        int altura;
-        public Node esquerda, direita;
+        String word;
+        int height;
+        Node left;
+        Node right;
+        TreeSet<String> words;
+        public String getValue;
+        private String value;
 
-        Node(String palavra) {
-            this.palavra = palavra;
-            this.altura = 1;
+        Node(String word) {
+            this.word = word;
         }
     }
 
-    public Node raiz;
+    private Node root;
 
-    public int altura(Node n) {
-        if (n == null) {
-            return 0;
+    public void insert(String word) {
+        root = insert(root, word);
+
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public int height() {
+        return root == null ? -1 : root.height;
+    }
+
+    private Node insert(Node node, String word) {
+        TreeSet<String> words = new TreeSet<>();
+        if (node == null) {
+            return new Node(word);
+        } else {
+            words.add(word);
+            words.add(node.word);
         }
-        return n.altura;
+        if (!words.first().equals(node.word)) {
+            node.left = insert(node.left, word);
+        } else if (words.first().equals(node.word)) {
+            node.right = insert(node.right, word);
+        } else {
+            throw new RuntimeException("Duplicate letter!");
+        }
+        return rebalance(node);
     }
 
-    public int max(int a, int b) {
-        return (a > b) ? a : b;
+    private Node rebalance(Node z) {
+        updateHeight(z);
+        int balance = getBalance(z);
+        if (balance > 1) {
+            if (height(z.right.right) > height(z.right.left)) {
+                z = rotateLeft(z);
+            } else {
+                z.right = rotateRight(z.right);
+                z = rotateLeft(z);
+            }
+        } else if (balance < -1) {
+            if (height(z.left.left) > height(z.left.right)) {
+                z = rotateRight(z);
+            } else {
+                z.left = rotateLeft(z.left);
+                z = rotateRight(z);
+            }
+        }
+        return z;
     }
 
-    public Node rotacaoDireita(Node y) {
-        Node x = y.esquerda;
-        Node T = x.direita;
-
-        x.direita = y;
-        y.esquerda = T;
-
-        y.altura = max(altura(y.esquerda), altura(y.direita)) + 1;
-        x.altura = max(altura(x.esquerda), altura(x.direita)) + 1;
-
+    private Node rotateRight(Node y) {
+        Node x = y.left;
+        Node z = x.right;
+        x.right = y;
+        y.left = z;
+        updateHeight(y);
+        updateHeight(x);
         return x;
     }
 
-    public Node rotacaoEsquerda(Node x) {
-        Node y = x.direita;
-        Node T = y.esquerda;
+    private Node rotateLeft(Node y) {
+        Node x = y.right;
+        Node z = x.left;
+        x.left = y;
+        y.right = z;
+        updateHeight(y);
+        updateHeight(x);
+        return x;
+    }
 
-        y.esquerda = x;
-        x.direita = T;
+    private void updateHeight(Node n) {
+        n.height = 1 + Math.max(height(n.left), height(n.right));
+    }
 
-        x.altura = max(altura(x.esquerda), altura(x.direita)) + 1;
-        y.altura = max(altura(y.esquerda), altura(y.direita)) + 1;
-
-        return y;
+    private int height(Node n) {
+        return n == null ? -1 : n.height;
     }
 
     public int getBalance(Node n) {
-        if (n == null) {
-            return 0;
-        }
-        return altura(n.esquerda) - altura(n.direita);
+        return (n == null) ? 0 : height(n.right) - height(n.left);
     }
 
-    public Node inserir(Node no, String palavra) {
-        if (no == null) {
-            return (new Node(palavra));
+    public void printDictionary(Node node) {
+        if (node != null) {
+            printDictionary(node.left);
+            System.out.print(node.word);
+            System.out.println();
+            printDictionary(node.right);
         }
-
-        if (palavra.compareTo(no.palavra) < 0) {
-            no.esquerda = inserir(no.esquerda, palavra);
-        } else if (palavra.compareTo(no.palavra) > 0) {
-            no.direita = inserir(no.direita, palavra);
-        } else {
-            return no;
-        }
-
-        no.altura = 1 + max(altura(no.esquerda), altura(no.direita));
-
-        int balance = getBalance(no);
-
-        if (balance > 1 && palavra.compareTo(no.esquerda.palavra) < 0) {
-            return rotacaoDireita(no);
-        }
-
-        if (balance < -1 && palavra.compareTo(no.direita.palavra) > 0) {
-            return rotacaoEsquerda(no);
-        }
-
-        if (balance > 1 && palavra.compareTo(no.esquerda.palavra) > 0) {
-            no.esquerda = rotacaoEsquerda(no.esquerda);
-            return rotacaoDireita(no);
-        }
-
-        if (balance < -1 && palavra.compareTo(no.direita.palavra) < 0) {
-            no.direita = rotacaoDireita(no.direita);
-            return rotacaoEsquerda(no);
-        }
-
-        return no;
     }
 
-    public void inorder(Node no) {
-        if (no != null) {
-            inorder(no.esquerda);
-            System.out.print(no.palavra + " ");
-            inorder(no.direita);
-        }
+    public void print() {
+        printDictionary(root);
     }
     
-
-    public void inserirPalavras(ArrayList<String> palavrasLimpas) {
-         for (String palavra : palavrasLimpas) {
-            raiz = inserir(raiz, palavra);
-        }
-    }
-
-    void imprimirArvore(StringBuilder sb, Node no) {
-        if (no != null) {
-            imprimirArvore(sb, no.esquerda);
-            sb.append(no.palavra).append("\n");
-            imprimirArvore(sb, no.direita);
-        }
     }
 }
+

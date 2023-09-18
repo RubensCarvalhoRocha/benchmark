@@ -13,8 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
-import estruturas.ArvoreAVL;
-import estruturas.ArvoreAVL.Node;
 import estruturas.FrequenciaPalavra;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -217,8 +215,6 @@ public class BenchMark extends javax.swing.JFrame {
             for (FrequenciaPalavra freq : frequencia) {
                 jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
             }
-
-            ArvoreAVL tree = new ArvoreAVL();
 
         } catch (IOException e) {
         }
