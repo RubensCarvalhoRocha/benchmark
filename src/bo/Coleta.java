@@ -32,7 +32,7 @@ public class Coleta {
         Set<String> stopWords = new HashSet<>();
 
         // Início do bloco try-catch para tratamento de exceções de E/S (IOException).
-        try ( BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\arthu\\OneDrive\\Documentos\\Trabalho_luizmario\\benchmark\\src\\Arquivos\\stopwords.txt"))) {
+        try ( BufferedReader br = new BufferedReader(new FileReader("C:\\WorkSpace\\Faculdade\\EstruturaDeDados2\\benchmark\\src\\Arquivos\\stopwords.txt"))) {
             // Declaração de uma variável para armazenar cada linha do arquivo.
             String linha;
 
@@ -66,41 +66,41 @@ public class Coleta {
         coleta.imprimirStopWords(stopWords);
     }
 
-    public ArrayList<String> coletarPalavras() {
-        ArrayList<String> palavras = new ArrayList<>();
+public ArrayList<String> coletarPalavras() {
+    ArrayList<String> palavras = new ArrayList<>();
 
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Texto (.txt)", "txt");
-        fileChooser.setFileFilter(filter);
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int result = fileChooser.showOpenDialog(null);
+    JFileChooser fileChooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Texto (.txt)", "txt");
+    fileChooser.setFileFilter(filter);
+    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    int result = fileChooser.showOpenDialog(null);
 
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
 
-            try ( FileReader fileReader = new FileReader(selectedFile);  BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    StringTokenizer tokenizer = new StringTokenizer(line);
-                    while (tokenizer.hasMoreTokens()) {
-                        String palavra = tokenizer.nextToken();
-                        // Transformar a palavra em minúsculas e remover sinais de pontuação
-                        palavra = palavra.toLowerCase().replaceAll("[^a-zA-Z]", ""); // Mantém apenas letras
-                        if (!palavra.isEmpty()) { // Certifique-se de que a palavra não está vazia após a filtragem
-                            palavras.add(palavra);
-                        }
+        try (FileReader fileReader = new FileReader(selectedFile); BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                // Dividir a linha em palavras usando a expressão regular [\\s\\p{Punct}]+
+                String[] words = line.split("[\\s\\p{Punct}]+|\\d+");
+                for (String word : words) {
+                    // Transformar a palavra em minúsculas e adicionar à lista de palavras
+                    word = word.toLowerCase();
+                    if (!word.isEmpty()) { // Certifique-se de que a palavra não está vazia após a filtragem
+                        palavras.add(word);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        } else {
-            System.out.println("Nenhum arquivo selecionado");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return palavras;
-
+    } else {
+        System.out.println("Nenhum arquivo selecionado");
     }
+
+    return palavras;
+}
+
 
     // Método que recebe uma lista de palavras e um conjunto de stop words e retorna uma lista de palavras limpas.
     public ArrayList<String> removerStopWords(ArrayList<String> palavras, Set<String> stopWords) {
