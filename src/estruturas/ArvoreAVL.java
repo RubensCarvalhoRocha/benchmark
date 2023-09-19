@@ -5,14 +5,14 @@
 package estruturas;
 
 import bo.Coleta;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import javax.naming.directory.SearchResult;
-
-
 
 public class ArvoreAVL {
 
@@ -135,6 +135,44 @@ public class ArvoreAVL {
         printDictionary(root);
     }
     
-    }
+    public void searchAndInsertWords() {
+         Coleta coleta = new Coleta();
+         
+           try {       
+            // Chamar o método coletarStopWords
+            Set<String> stopWords = coleta.coletarStopWords();
+            // Chamar o método coletarPalavras
+            ArrayList<String> palavras = coleta.coletarPalavras();
+            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
+            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+
+            for (String palavraLimpa : palavrasLimpas) {
+                System.out.println(palavraLimpa);
+                root = searchAndInsert(root, palavraLimpa);
+            }
+          
+            } catch (IOException e) {
+        }
+            
+        }
+    
+    private Node searchAndInsert(Node node, String word) {
+            if (node == null) {
+                return new Node(word);
+            }
+
+            int compareResult = word.compareTo(node.word);
+
+            if (compareResult < 0) {
+                node.left = searchAndInsert(node.left, word);
+            } else if (compareResult > 0) {
+                node.right = searchAndInsert(node.right, word);
+            }
+
+            return rebalance(node);
+        } 
+    
+    }  
+    
 }
 
