@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import java.io.IOException;
@@ -222,6 +218,17 @@ public class BenchMark extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+       
+        //Validando as Arvores:
+    Arvore arvore = new Arvore(); 
+    ArvoreAVL arvoreAvl = new ArvoreAVL();
+
+    arvore.addPalavrasLimpasArvore();
+    arvore.printTree();  
+    System.out.println("---------------");
+      
+    arvoreAvl.addPalavrasLimpasArvoreAVL();
+    arvoreAvl.printAVLTree();
         
         
         /* Set the Nimbus look and feel */
