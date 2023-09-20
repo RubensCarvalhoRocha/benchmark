@@ -4,10 +4,11 @@ import bo.Coleta;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import javax.swing.JTextArea;
 
 public class ArvoreAVL {
 
-    int comparacoesArvoreAVL = 0;
+    public int comparacoesArvoreAVL = 0;
 
     public class Node {
 
@@ -25,14 +26,14 @@ public class ArvoreAVL {
 
     public int find(String palavra) {
         Node current = root;
-        
+
         while (current != null) {
             comparacoesArvoreAVL = comparacoesArvoreAVL + 1;
             if (palavra.isEmpty()) {
                 return -1;
             }
             if (current.key.equals(palavra)) { // Check for exact match
-                
+
                 return 0; // Palavra encontrada, retorne 0
             }
             int cmp = current.key.compareTo(palavra);
@@ -180,29 +181,47 @@ public class ArvoreAVL {
     public void printAVLTree() {
         printAVLTree(root, "", true);
     }
-    
-    public void addPalavrasLimpasArvoreAVL() {
-        
-        Coleta coleta = new Coleta();
-         
-           try {       
-            // Chamar o método coletarStopWords
-            Set<String> stopWords = coleta.coletarStopWords();
-            // Chamar o método coletarPalavras
-            ArrayList<String> palavras = coleta.coletarPalavras();
-            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
-                for (String palavraLimpa : palavrasLimpas) {
-                    int resultadoBusca = find(palavraLimpa);
-                    if (resultadoBusca == -1) {
-                        insert(palavraLimpa);
-                    }
-                }
-          
-            } catch (IOException e) {}
-        
+    public void addPalavrasLimpasArvoreAVL(ArrayList<String> palavrasLimpas) {
+        Coleta coleta = new Coleta();
+
+//            // Chamar o método coletarStopWords
+//            Set<String> stopWords = coleta.coletarStopWords();
+//            // Chamar o método coletarPalavras
+//            ArrayList<String> palavras = coleta.coletarPalavras();
+//            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
+//            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+        //long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
+
+        for (String palavraLimpa : palavrasLimpas) {
+            int resultadoBusca = find(palavraLimpa);
+            if (resultadoBusca == -1) {
+                insert(palavraLimpa);
+            }
+        }
+       // long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
+       // long arvoreAvlTempo = endTimeAVL - startTimeAVL; // Calcular o tempo de execução
+
+       // System.out.println("Tempo de inserção na árvoreAVL: " + arvoreAvlTempo + " milissegundos");
+
+    }
+
+    public String getAVLTreeString(Node node, String indent, boolean last) {
+        StringBuilder sb = new StringBuilder();
+        if (node != null) {
+            sb.append(indent);
+            if (last) {
+                sb.append("└─");
+                indent += "  ";
+            } else {
+                sb.append("├─");
+                indent += "│ ";
+            }
+            sb.append(node.key).append("\n");
+
+            sb.append(getAVLTreeString(node.left, indent, false));
+            sb.append(getAVLTreeString(node.right, indent, true));
+        }
+        return sb.toString();
     }
 }
-
-

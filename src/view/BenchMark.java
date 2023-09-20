@@ -9,7 +9,6 @@ import estruturas.Arvore;
 import estruturas.ArvoreAVL;
 import bo.FrequenciaPalavra;
 
-
 public class BenchMark extends javax.swing.JFrame {
 
     public BenchMark() {
@@ -195,7 +194,7 @@ public class BenchMark extends javax.swing.JFrame {
             for (String palavraLimpa : palavrasLimpas) {
                 System.out.println(palavraLimpa);
             }
-            
+
             System.out.println("");
 
             ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
@@ -208,6 +207,38 @@ public class BenchMark extends javax.swing.JFrame {
             for (FrequenciaPalavra freq : frequencia) {
                 jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
             }
+            // Instanciar a árvore AVL
+            ArvoreAVL arvoreAVL = new ArvoreAVL();
+
+// Adicionar palavras limpas à árvore
+            //ini
+            long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
+            arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
+            
+            //fim
+            long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
+            long arvoreAVLTempo = endTimeAVL - startTimeAVL; 
+            int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
+            String info = comparacoesAVL + " comparações\n"+ arvoreAVLTempo + " milissegundos";
+            jTextAreaRelatorioArvoreAVL.append(info);
+
+            Arvore arvore = new Arvore();
+            //ini
+            long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
+            arvore.addPalavrasLimpasArvore(palavrasLimpas);
+            //fim
+            long endTime = System.currentTimeMillis(); // Registrar o tempo final
+            long arvoreTempo = endTime - startTime; 
+            int comparações = arvore.comparacoesArvore;
+            String info2 = comparações + " comparações\n" + arvoreTempo + " milissegundos";
+            jTextAreaRelatorioArvore.append(info2);
+            
+            
+            
+           System.out.println("Arvore AVL");
+            arvoreAVL.printAVLTree();
+            System.out.println("Arvore Não Balanceada");
+            arvore.printTree();
 
         } catch (IOException e) {
         }
@@ -218,20 +249,19 @@ public class BenchMark extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       
-        //Validando as Arvores:
-    //Arvore arvore = new Arvore(); 
-   // ArvoreAVL arvoreAvl = new ArvoreAVL();
-    //System.out.println("Arvore AVL");
-    //arvore.addPalavrasLimpasArvore();
-    //arvore.printTree();  
-   // System.out.println("---------------");
-    //System.out.println("Arvore Não Balanceada");  
-   // arvoreAvl.addPalavrasLimpasArvoreAVL();
-    //arvoreAvl.printAVLTree();
-        
-        
-        /* Set the Nimbus look and feel */
+
+        //Validando as Arvores:S
+        /*Arvore arvore = new Arvore();
+        ArvoreAVL arvoreAvl = new ArvoreAVL();
+        System.out.println("Arvore AVL");
+        arvore.addPalavrasLimpasArvore();
+        arvore.printTree();
+        System.out.println("---------------");
+        System.out.println("Arvore Não Balanceada");
+        arvoreAvl.addPalavrasLimpasArvoreAVL();
+        arvoreAvl.printAVLTree();*/
+
+ /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
