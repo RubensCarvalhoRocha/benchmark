@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import bo.Coleta;
-import estruturas.BuscaBinaria;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
 import bo.FrequenciaPalavra;
@@ -250,9 +249,9 @@ public class BenchMark extends javax.swing.JFrame {
             }
 
             // Imprimir os elementos do vetor dinâmico na tela
-            for (String palavra : vetorDinamico) {
-                System.out.println(palavra);
-            }
+           // for (String palavra : vetorDinamico) {
+          //      System.out.println(palavra);
+           // }
 
             System.out.println("Arvore AVL");
             arvoreAVL.printAVLTree();
