@@ -8,6 +8,7 @@ import estruturas.BuscaBinaria;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
 import bo.FrequenciaPalavra;
+import estruturas.BuscaBinaria2;
 
 public class BenchMark extends javax.swing.JFrame {
 
@@ -191,16 +192,7 @@ public class BenchMark extends javax.swing.JFrame {
             ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
             // Por exemplo, você pode imprimir as palavras limpas no console:
-            for (String palavraLimpa : palavrasLimpas) {
-                System.out.println(palavraLimpa);
-            }
-
-            System.out.println("");
-
             ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
-            for (String palavra : palavrasLimpasOrdenadas) {
-                System.out.println(palavra);
-            }
 
             ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
             // Agora você pode imprimir a frequência das palavras
@@ -214,12 +206,12 @@ public class BenchMark extends javax.swing.JFrame {
             //ini
             long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
             arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
-            
+
             //fim
             long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
-            long arvoreAVLTempo = endTimeAVL - startTimeAVL; 
+            long arvoreAVLTempo = endTimeAVL - startTimeAVL;
             int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
-            String info = comparacoesAVL + " comparações\n"+ arvoreAVLTempo + " milissegundos";
+            String info = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
             jTextAreaRelatorioArvoreAVL.append(info);
 
             Arvore arvore = new Arvore();
@@ -228,15 +220,43 @@ public class BenchMark extends javax.swing.JFrame {
             arvore.addPalavrasLimpasArvore(palavrasLimpas);
             //fim
             long endTime = System.currentTimeMillis(); // Registrar o tempo final
-            long arvoreTempo = endTime - startTime; 
+            long arvoreTempo = endTime - startTime;
             int comparações = arvore.comparacoesArvore;
+            
             String info2 = comparações + " comparações\n" + arvoreTempo + " milissegundos";
             jTextAreaRelatorioArvore.append(info2);
+
+            BuscaBinaria2 busca = new BuscaBinaria2();
             
-            
-            
-           System.out.println("Arvore AVL");
+            busca.InserirVetorDinamico(palavrasLimpas);
+            int comparacoesBusca= busca.comparacoesBuscaBinaria;
+            String info4 = (comparacoesBusca) + " comparações\n";
+
+            //ini
+            long startTimeVetor = System.currentTimeMillis(); // Registrar o tempo inicial
+            busca.InserirVetorDinamico(palavrasLimpas);
+            //fim
+            long endTimeVetor = System.currentTimeMillis(); // Registrar o tempo final
+            long vetorTempo = endTimeVetor - startTimeVetor;
+
+            String info3 = vetorTempo + " milesegundos";
+            jTextAreaRelatorioBuscaBinaria.append(info4 + info3);
+
+            ArrayList<String> vetorDinamico = new ArrayList<>();
+            for (String palavra : palavrasLimpas) {
+                if (!vetorDinamico.contains(palavra)) {
+                    vetorDinamico.add(palavra);
+                }
+            }
+
+            // Imprimir os elementos do vetor dinâmico na tela
+            for (String palavra : vetorDinamico) {
+                System.out.println(palavra);
+            }
+
+            System.out.println("Arvore AVL");
             arvoreAVL.printAVLTree();
+            System.out.println("");
             System.out.println("Arvore Não Balanceada");
             arvore.printTree();
 

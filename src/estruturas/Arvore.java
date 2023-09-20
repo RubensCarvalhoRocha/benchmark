@@ -43,10 +43,12 @@ public class Arvore {
     }
 
     public void insert(String key) {
+        
         root = insertRec(root, key);
     }
 
     private Node insertRec(Node node, String key) {
+        
         if (node == null) {
             return new Node(key);
         }
@@ -128,19 +130,13 @@ public class Arvore {
     public void addPalavrasLimpasArvore(ArrayList<String> palavrasLimpas) {
         Coleta coleta = new Coleta();
 
-            //long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
                 
             for (String palavraLimpa : palavrasLimpas) {
                 int resultadoBusca = find(palavraLimpa);
                 if (resultadoBusca == -1) {
                     insert(palavraLimpa);
                 }
-            }
-            
-           // long endTime = System.currentTimeMillis(); // Registrar o tempo final
-           // long arvoreTempo = endTime - startTime; // Calcular o tempo de execução
-
-        //System.out.println("Tempo de inserção na árvore: " + arvoreTempo + " milissegundos");
+            }         
 
     }
 }

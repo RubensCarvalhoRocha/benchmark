@@ -47,7 +47,6 @@ public class ArvoreAVL {
     }
 
     public void insert(String key) {
-        comparacoesArvoreAVL = comparacoesArvoreAVL + 1;
         root = insert(root, key);
     }
 
@@ -64,7 +63,6 @@ public class ArvoreAVL {
     }
 
     private Node insert(Node node, String key) {
-        comparacoesArvoreAVL = comparacoesArvoreAVL + 1;
         if (node == null) {
             return new Node(key);
         } else if (node.key.compareTo(key) > 0) {
@@ -185,13 +183,6 @@ public class ArvoreAVL {
     public void addPalavrasLimpasArvoreAVL(ArrayList<String> palavrasLimpas) {
         Coleta coleta = new Coleta();
 
-//            // Chamar o método coletarStopWords
-//            Set<String> stopWords = coleta.coletarStopWords();
-//            // Chamar o método coletarPalavras
-//            ArrayList<String> palavras = coleta.coletarPalavras();
-//            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-//            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
-        //long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
 
         for (String palavraLimpa : palavrasLimpas) {
             int resultadoBusca = find(palavraLimpa);
@@ -199,10 +190,6 @@ public class ArvoreAVL {
                 insert(palavraLimpa);
             }
         }
-       // long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
-       // long arvoreAvlTempo = endTimeAVL - startTimeAVL; // Calcular o tempo de execução
-
-       // System.out.println("Tempo de inserção na árvoreAVL: " + arvoreAvlTempo + " milissegundos");
 
     }
 

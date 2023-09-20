@@ -4,39 +4,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import bo.Coleta;
+import java.util.Collections;
 
 public class BuscaBinaria2 {
+    
+    public static int comparacoesBuscaBinaria = 0;
  
-     public static void main() {
-        // Criando um ArrayList de inteiros
+     public void InserirVetorDinamico(ArrayList<String> palavrasLimpas) {
+         
         ArrayList<String> vetorDinamico = new ArrayList<>();
-        
-        Coleta coleta = new Coleta();
-        
-        try {
-            // Chamar o método coletarStopWords
-            Set<String> stopWords = coleta.coletarStopWords();
-            // Chamar o método coletarPalavras
-            ArrayList<String> palavras = coleta.coletarPalavras();
-            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
-             for (String palavra : palavrasLimpas) {
-                if (!vetorDinamico.contains(palavra)) {
-                    // A palavra não foi encontrada no vetor dinâmico, então a adicionamos
-                    vetorDinamico.add(palavra);
-                }
+            for (String palavra : palavrasLimpas) {
+                
+            
+            int posicao = buscaBinaria(vetorDinamico, palavra);
+
+            if (posicao == -1) {
+                vetorDinamico.add(palavra);
+                Collections.sort(vetorDinamico);
+                
             }
-
-        } catch (IOException e) {}
-        
-     }
+        }
+    }
      
       public static int buscaBinaria(ArrayList<String> listaOrdenada, String alvo) {
         int esquerda = 0;
         int direita = listaOrdenada.size() - 1;
 
         while (esquerda <= direita) {
+            comparacoesBuscaBinaria++;
             int meio = esquerda + (direita - esquerda) / 2;
             int comparacao = alvo.compareTo(listaOrdenada.get(meio));
 
