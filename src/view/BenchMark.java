@@ -1,21 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import bo.Coleta;
-import estruturas.FrequenciaPalavra;
-import java.util.HashMap;
-import java.util.TreeSet;
+import estruturas.BuscaBinaria;
+import estruturas.Arvore;
+import estruturas.ArvoreAVL;
+import bo.FrequenciaPalavra;
+
 
 public class BenchMark extends javax.swing.JFrame {
 
@@ -225,6 +218,19 @@ public class BenchMark extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+       
+        //Validando as Arvores:
+    //Arvore arvore = new Arvore(); 
+   // ArvoreAVL arvoreAvl = new ArvoreAVL();
+    //System.out.println("Arvore AVL");
+    //arvore.addPalavrasLimpasArvore();
+    //arvore.printTree();  
+   // System.out.println("---------------");
+    //System.out.println("Arvore Não Balanceada");  
+   // arvoreAvl.addPalavrasLimpasArvoreAVL();
+    //arvoreAvl.printAVLTree();
+        
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -1,74 +1,150 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package estruturas;
 
 import bo.Coleta;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-import javax.naming.directory.SearchResult;
-
-
+import java.util.Set;
 
 public class Arvore {
 
-    public class Tree {
+    int comparacoesArvore = 0;
 
-        public class Node {
+    public class Node {
+        String key;
+        Node left;
+        Node right;
 
-            String word;
-            Node left;
-            Node right;
+        Node(String key) {
+            this.key = key;
+        }
+    }
 
-            Node(String word) {
-                this.word = word;
+    private Node root;
+
+    public int find(String palavra) {
+        Node current = root;
+
+        while (current != null) {
+            comparacoesArvore = comparacoesArvore + 1;
+            if (palavra.isEmpty()) {
+                return -1;
             }
-        }
-
-        private Node root;
-
-        public void insert(String word) {
-            root = insert(root, word);
-        }
-
-        public Node getRoot() {
-            return root;
-        }
-
-        private Node insert(Node node, String word) {
-            if (node == null) {
-                return new Node(word);
+            if (current.key.equals(palavra)) {
+                return 0; // Palavra encontrada, retorne 0
             }
-            
-            int compareResult = word.compareTo(node.word);
-            
-            if (compareResult < 0) {
-                node.left = insert(node.left, word);
-            } else if (compareResult > 0) {
-                node.right = insert(node.right, word);
+            int cmp = current.key.compareTo(palavra);
+            if (cmp < 0) {
+                current = current.right;
             } else {
-                throw new RuntimeException("Duplicate word!");
+                current = current.left;
             }
-            
+        }
+        return -1; // Palavra não encontrada, retorne -1
+    }
+
+    public void insert(String key) {
+        root = insertRec(root, key);
+    }
+
+    private Node insertRec(Node node, String key) {
+        if (node == null) {
+            return new Node(key);
+        }
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            node.left = insertRec(node.left, key);
+        } else if (cmp > 0) {
+            node.right = insertRec(node.right, key);
+        }
+        return node;
+    }
+
+    public void delete(String key) {
+        root = deleteRec(root, key);
+    }
+
+    private Node deleteRec(Node node, String key) {
+        if (node == null) {
             return node;
         }
 
-        public void printDictionary(Node node) {
-            if (node != null) {
-                printDictionary(node.left);
-                System.out.print(node.word);
-                System.out.println();
-                printDictionary(node.right);
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            node.left = deleteRec(node.left, key);
+        } else if (cmp > 0) {
+            node.right = deleteRec(node.right, key);
+        } else {
+            // Node com apenas um filho ou nenhum filho
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
             }
+
+            // Node com dois filhos, obtem o sucessor in-order (menor na subárvore direita)
+            node.key = minValue(node.right);
+
+            // Deleta o sucessor in-order
+            node.right = deleteRec(node.right, node.key);
         }
 
-        public void print() {
-            printDictionary(root);
+        return node;
+    }
+
+    private String minValue(Node node) {
+        String minValue = node.key;
+        while (node.left != null) {
+            minValue = node.left.key;
+            node = node.left;
+        }
+        return minValue;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void printTree(Node node, String indent, boolean last) {
+        if (node != null) {
+            System.out.print(indent);
+            if (last) {
+                System.out.print("└─");
+                indent += "  ";
+            } else {
+                System.out.print("├─");
+                indent += "│ ";
+            }
+            System.out.println(node.key);
+
+            printTree(node.left, indent, false);
+            printTree(node.right, indent, true);
+        }
+    }
+
+    public void printTree() {
+        printTree(root, "", true);
+    }
+
+    public void addPalavrasLimpasArvore() {
+        Coleta coleta = new Coleta();
+
+        try {
+            // Chamar o método coletarStopWords
+            Set<String> stopWords = coleta.coletarStopWords();
+            // Chamar o método coletarPalavras
+            ArrayList<String> palavras = coleta.coletarPalavras();
+            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
+            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+
+            for (String palavraLimpa : palavrasLimpas) {
+                int resultadoBusca = find(palavraLimpa);
+                if (resultadoBusca == -1) {
+                    insert(palavraLimpa);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
-
