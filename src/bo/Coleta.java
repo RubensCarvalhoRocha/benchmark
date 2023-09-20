@@ -31,7 +31,7 @@ public class Coleta {
         Set<String> stopWords = new HashSet<>();
 
         // Início do bloco try-catch para tratamento de exceções de E/S (IOException).
-        try ( BufferedReader br = new BufferedReader(new FileReader("C:\\WorkSpace\\Faculdade\\EstruturaDeDados2\\benchmark\\src\\Arquivos\\stopwords.txt"))) {
+        try ( BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\arthu\\Downloads\\stopwords.txt"))) {
             // Declaração de uma variável para armazenar cada linha do arquivo.
             String linha;
 

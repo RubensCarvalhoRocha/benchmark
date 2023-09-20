@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Arvore {
 
-    int comparacoesArvore = 0;
+     public int comparacoesArvore = 0;
 
     public class Node {
         String key;
@@ -125,26 +125,22 @@ public class Arvore {
         printTree(root, "", true);
     }
 
-    public void addPalavrasLimpasArvore() {
+    public void addPalavrasLimpasArvore(ArrayList<String> palavrasLimpas) {
         Coleta coleta = new Coleta();
 
-        try {
-            // Chamar o método coletarStopWords
-            Set<String> stopWords = coleta.coletarStopWords();
-            // Chamar o método coletarPalavras
-            ArrayList<String> palavras = coleta.coletarPalavras();
-            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
-
+            //long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
+                
             for (String palavraLimpa : palavrasLimpas) {
                 int resultadoBusca = find(palavraLimpa);
                 if (resultadoBusca == -1) {
                     insert(palavraLimpa);
                 }
             }
+            
+           // long endTime = System.currentTimeMillis(); // Registrar o tempo final
+           // long arvoreTempo = endTime - startTime; // Calcular o tempo de execução
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //System.out.println("Tempo de inserção na árvore: " + arvoreTempo + " milissegundos");
+
     }
 }
