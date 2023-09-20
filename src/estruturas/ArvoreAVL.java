@@ -1,46 +1,60 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package estruturas;
-
 import bo.Coleta;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-import javax.naming.directory.SearchResult;
 
 public class ArvoreAVL {
 
-    public class Tree {
-
-    List<SearchResult> listResult = new ArrayList<>();
-    Map<String, SearchResult> mapa = new HashMap<>();
+    int comparacoesArvoreAVL = 0;
 
     public class Node {
 
-        String word;
+        String key;
         int height;
         Node left;
         Node right;
-        TreeSet<String> words;
-        public String getValue;
-        private String value;
 
-        Node(String word) {
-            this.word = word;
+        Node(String key) {
+            this.key = key;
         }
     }
 
     private Node root;
 
-    public void insert(String word) {
-        root = insert(root, word);
+    public int find(String palavra) {
+        Node current = root;
+        
+        while (current != null) {
+            comparacoesArvoreAVL = comparacoesArvoreAVL + 1;
+            if (palavra.isEmpty()) {
+                return -1;
+            }
+            if (current.key.equals(palavra)) { // Check for exact match
+                
+                return 0; // Palavra encontrada, retorne 0
+            }
+            int cmp = current.key.compareTo(palavra);
+            if (cmp < 0) {
+                current = current.right;
+            } else {
+                current = current.left;
+            }
+        }
+        return -1; // Palavra não encontrada, retorne -1
+    }
 
+    public void insert(String key) {
+        comparacoesArvoreAVL = comparacoesArvoreAVL + 1;
+        root = insert(root, key);
+    }
+
+    public void delete(String key) {
+        root = delete(root, key);
     }
 
     public Node getRoot() {
@@ -51,22 +65,49 @@ public class ArvoreAVL {
         return root == null ? -1 : root.height;
     }
 
-    private Node insert(Node node, String word) {
-        TreeSet<String> words = new TreeSet<>();
+    private Node insert(Node node, String key) {
+        comparacoesArvoreAVL = comparacoesArvoreAVL + 1;
         if (node == null) {
-            return new Node(word);
+            return new Node(key);
+        } else if (node.key.compareTo(key) > 0) {
+            node.left = insert(node.left, key);
+        } else if (node.key.compareTo(key) < 0) {
+            node.right = insert(node.right, key);
         } else {
-            words.add(word);
-            words.add(node.word);
-        }
-        if (!words.first().equals(node.word)) {
-            node.left = insert(node.left, word);
-        } else if (words.first().equals(node.word)) {
-            node.right = insert(node.right, word);
-        } else {
-            throw new RuntimeException("Duplicate letter!");
+            throw new RuntimeException("Duplicate key!");
         }
         return rebalance(node);
+    }
+
+    private Node delete(Node node, String key) {
+        if (node == null) {
+            return node;
+        } else if (node.key.compareTo(key) > 0) {
+            node.left = delete(node.left, key);
+        } else if (node.key.compareTo(key) < 0) {
+            node.right = delete(node.right, key);
+        } else {
+            if (node.left == null || node.right == null) {
+                node = (node.left == null) ? node.right : node.left;
+            } else {
+                Node mostLeftChild = mostLeftChild(node.right);
+                node.key = mostLeftChild.key;
+                node.right = delete(node.right, node.key);
+            }
+        }
+        if (node != null) {
+            node = rebalance(node);
+        }
+        return node;
+    }
+
+    private Node mostLeftChild(Node node) {
+        Node current = node;
+        /* loop down to find the leftmost leaf */
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
     }
 
     private Node rebalance(Node z) {
@@ -122,21 +163,30 @@ public class ArvoreAVL {
         return (n == null) ? 0 : height(n.right) - height(n.left);
     }
 
-    public void printDictionary(Node node) {
+    public void printAVLTree(Node node, String indent, boolean last) {
         if (node != null) {
-            printDictionary(node.left);
-            System.out.print(node.word);
-            System.out.println();
-            printDictionary(node.right);
+            System.out.print(indent);
+            if (last) {
+                System.out.print("└─");
+                indent += "  ";
+            } else {
+                System.out.print("├─");
+                indent += "│ ";
+            }
+            System.out.println(node.key);
+
+            printAVLTree(node.left, indent, false);
+            printAVLTree(node.right, indent, true);
         }
     }
 
-    public void print() {
-        printDictionary(root);
+    public void printAVLTree() {
+        printAVLTree(root, "", true);
     }
     
-    public void searchAndInsertWords() {
-         Coleta coleta = new Coleta();
+    public void addPalavrasLimpasArvoreAVL() {
+        
+        Coleta coleta = new Coleta();
          
            try {       
             // Chamar o método coletarStopWords
@@ -146,33 +196,16 @@ public class ArvoreAVL {
             // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
             ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
-            for (String palavraLimpa : palavrasLimpas) {
-                System.out.println(palavraLimpa);
-                root = searchAndInsert(root, palavraLimpa);
-            }
+                for (String palavraLimpa : palavrasLimpas) {
+                    int resultadoBusca = find(palavraLimpa);
+                    if (resultadoBusca == -1) {
+                        insert(palavraLimpa);
+                    }
+                }
           
-            } catch (IOException e) {
-        }
-            
-        }
-    
-    private Node searchAndInsert(Node node, String word) {
-            if (node == null) {
-                return new Node(word);
-            }
-
-            int compareResult = word.compareTo(node.word);
-
-            if (compareResult < 0) {
-                node.left = searchAndInsert(node.left, word);
-            } else if (compareResult > 0) {
-                node.right = searchAndInsert(node.right, word);
-            }
-
-            return rebalance(node);
-        } 
-    
-    }  
-    
+            } catch (IOException e) {}
+        
+    }
 }
+
 
