@@ -7,7 +7,7 @@ import bo.Coleta;
 import estruturas.BuscaBinaria;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
-import estruturas.FrequenciaPalavra;
+import bo.FrequenciaPalavra;
 
 
 public class BenchMark extends javax.swing.JFrame {
@@ -222,11 +222,11 @@ public class BenchMark extends javax.swing.JFrame {
         //Validando as Arvores:
     Arvore arvore = new Arvore(); 
     ArvoreAVL arvoreAvl = new ArvoreAVL();
-
+    System.out.println("Arvore AVL");
     arvore.addPalavrasLimpasArvore();
     arvore.printTree();  
     System.out.println("---------------");
-      
+    System.out.println("Arvore Não Balanceada");  
     arvoreAvl.addPalavrasLimpasArvoreAVL();
     arvoreAvl.printAVLTree();
         
