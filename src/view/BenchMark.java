@@ -220,15 +220,15 @@ public class BenchMark extends javax.swing.JFrame {
     public static void main(String args[]) {
        
         //Validando as Arvores:
-    Arvore arvore = new Arvore(); 
-    ArvoreAVL arvoreAvl = new ArvoreAVL();
-    System.out.println("Arvore AVL");
-    arvore.addPalavrasLimpasArvore();
-    arvore.printTree();  
-    System.out.println("---------------");
-    System.out.println("Arvore Não Balanceada");  
-    arvoreAvl.addPalavrasLimpasArvoreAVL();
-    arvoreAvl.printAVLTree();
+    //Arvore arvore = new Arvore(); 
+   // ArvoreAVL arvoreAvl = new ArvoreAVL();
+    //System.out.println("Arvore AVL");
+    //arvore.addPalavrasLimpasArvore();
+    //arvore.printTree();  
+   // System.out.println("---------------");
+    //System.out.println("Arvore Não Balanceada");  
+   // arvoreAvl.addPalavrasLimpasArvoreAVL();
+    //arvoreAvl.printAVLTree();
         
         
         /* Set the Nimbus look and feel */
