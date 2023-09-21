@@ -1,29 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bo;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- *
- * @author Administrator
- */
 public class Coleta {
 
     public Set<String> coletarStopWords() throws IOException {
@@ -80,10 +66,10 @@ public ArrayList<String> coletarPalavras() {
         try (FileReader fileReader = new FileReader(selectedFile); BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                // Dividir a linha em palavras usando a expressão regular [\\s\\p{Punct}]+
+               
                 String[] words = line.split("[\\s\\p{Punct}]+|\\d+");
                 for (String word : words) {
-                    // Transformar a palavra em minúsculas e adicionar à lista de palavras
+                    
                     word = word.toLowerCase();
                     if (!word.isEmpty()) { // Certifique-se de que a palavra não está vazia após a filtragem
                         palavras.add(word);
@@ -119,67 +105,5 @@ public ArrayList<String> coletarPalavras() {
         return palavrasLimpas;
 
     }
-
-    public ArrayList<String> obterPalavrasLimpasOrdenadas(ArrayList<String> palavrasLimpas) {
-        // Copia as palavras limpas para o ArrayList palavrasLimpasOrdenadas
-        ArrayList<String> palavrasLimpasOrdenadas = new ArrayList<>(palavrasLimpas);
-
-        // Chama o método de ordenação (Quicksort)
-        quickSort(palavrasLimpasOrdenadas, 0, palavrasLimpasOrdenadas.size() - 1);
-
-        return palavrasLimpasOrdenadas;
-    }
-
-    public void quickSort(ArrayList<String> palavras, int inicio, int fim) {
-        if (inicio < fim) {
-            int indicePivo = particionar(palavras, inicio, fim);
-            quickSort(palavras, inicio, indicePivo - 1);
-            quickSort(palavras, indicePivo + 1, fim);
-        }
-    }
-
-    public int particionar(ArrayList<String> palavras, int inicio, int fim) {
-        String pivo = palavras.get(fim);
-        int i = inicio - 1;
-
-        for (int j = inicio; j < fim; j++) {
-            if (palavras.get(j).compareTo(pivo) < 0) {
-                i++;
-                String temp = palavras.get(i);
-                palavras.set(i, palavras.get(j));
-                palavras.set(j, temp);
-            }
-        }
-
-        String temp = palavras.get(i + 1);
-        palavras.set(i + 1, palavras.get(fim));
-        palavras.set(fim, temp);
-
-        return i + 1;
-    }
-    
-    public ArrayList<FrequenciaPalavra> contarFrequencia(ArrayList<String> palavras) {
-    ArrayList<FrequenciaPalavra> frequencia = new ArrayList<>();
-
-    for (String palavra : palavras) {
-        boolean encontrada = false;
-        
-        for (FrequenciaPalavra freq : frequencia) {
-            if (freq.getPalavra().equals(palavra)) {
-                freq.incrementarFrequencia();
-                encontrada = true;
-                break;
-            }
-        }
-        
-        if (!encontrada) {
-            frequencia.add(new FrequenciaPalavra(palavra));
-        }
-    }
-
-    return frequencia;
-}
-    
-
 
 }

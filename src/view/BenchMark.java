@@ -6,7 +6,6 @@ import java.util.Set;
 import bo.Coleta;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
-import bo.FrequenciaPalavra;
 import estruturas.BuscaBinaria2;
 
 public class BenchMark extends javax.swing.JFrame {
@@ -191,13 +190,15 @@ public class BenchMark extends javax.swing.JFrame {
             ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
             // Por exemplo, você pode imprimir as palavras limpas no console:
-            ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
+         //   ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
 
-            ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
+         
+         //ORDENADAS
+       //     ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
             // Agora você pode imprimir a frequência das palavras
-            for (FrequenciaPalavra freq : frequencia) {
-                jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
-            }
+   //         for (FrequenciaPalavra freq : frequencia) {
+  //             jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
+   //         }
             // Instanciar a árvore AVL
             ArvoreAVL arvoreAVL = new ArvoreAVL();
 
