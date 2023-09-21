@@ -51,8 +51,8 @@ public class Coleta {
         coleta.imprimirStopWords(stopWords);
     }
 
-public ArrayList<String> coletarPalavras() {
-    ArrayList<String> palavras = new ArrayList<>();
+public ArrayList<String> coletarPalavrasLimpas(Set<String> stopWords) {
+    ArrayList<String> palavrasLimpas = new ArrayList<>();
 
     JFileChooser fileChooser = new JFileChooser();
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Texto (.txt)", "txt");
@@ -66,13 +66,11 @@ public ArrayList<String> coletarPalavras() {
         try (FileReader fileReader = new FileReader(selectedFile); BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-               
                 String[] words = line.split("[\\s\\p{Punct}]+|\\d+");
                 for (String word : words) {
-                    
                     word = word.toLowerCase();
-                    if (!word.isEmpty()) { // Certifique-se de que a palavra não está vazia após a filtragem
-                        palavras.add(word);
+                    if (!word.isEmpty() && !stopWords.contains(word)) {
+                        palavrasLimpas.add(word);
                     }
                 }
             }
@@ -83,27 +81,7 @@ public ArrayList<String> coletarPalavras() {
         System.out.println("Nenhum arquivo selecionado");
     }
 
-    return palavras;
+    return palavrasLimpas;
 }
-
-
-    // Método que recebe uma lista de palavras e um conjunto de stop words e retorna uma lista de palavras limpas.
-    public ArrayList<String> removerStopWords(ArrayList<String> palavras, Set<String> stopWords) {
-        // Cria uma nova ArrayList para armazenar as palavras limpas.
-        ArrayList<String> palavrasLimpas = new ArrayList<>();
-
-        // Itera através de cada palavra na lista de entrada 'palavras'.
-        for (String palavra : palavras) {
-            // Verifica se a palavra não está presente no conjunto de stop words antes de adicioná-la às palavras limpas.
-            if (!stopWords.contains(palavra)) {
-                // Se a palavra não estiver nas stop words, ela é adicionada à lista de palavras limpas.
-                palavrasLimpas.add(palavra);
-            }
-        }
-
-        // Retorna a lista de palavras limpas após o processamento.
-        return palavrasLimpas;
-
-    }
 
 }

@@ -183,11 +183,11 @@ public class BenchMark extends javax.swing.JFrame {
             // Chamar o método coletarStopWords
             Set<String> stopWords = coleta.coletarStopWords();
 
-            // Chamar o método coletarPalavras
-            ArrayList<String> palavras = coleta.coletarPalavras();
+            // Chamar o método coletarPalavrasLimpas
+            ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
 
             // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+   //         ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
             // Por exemplo, você pode imprimir as palavras limpas no console:
          //   ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
