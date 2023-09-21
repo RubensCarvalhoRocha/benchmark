@@ -242,13 +242,17 @@ public class BenchMark extends javax.swing.JFrame {
             String info3 = vetorTempo + " milesegundos";
             jTextAreaRelatorioBuscaBinaria.append(info4 + info3);
 
-            ArrayList<String> vetorDinamico = new ArrayList<>();
-            for (String palavra : palavrasLimpas) {
-                if (!vetorDinamico.contains(palavra)) {
-                    vetorDinamico.add(palavra);
-                }
-            }
+            
+            //Oque é isso aqui??
+            //ArrayList<String> vetorDinamico = new ArrayList<>();
+           // for (String palavra : palavrasLimpas) {
+            //    if (!vetorDinamico.contains(palavra)) {
+            //        vetorDinamico.add(palavra);
+            //    }
+            //}
 
+            
+            
             // Imprimir os elementos do vetor dinâmico na tela
            // for (String palavra : vetorDinamico) {
           //      System.out.println(palavra);
