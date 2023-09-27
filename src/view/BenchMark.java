@@ -177,90 +177,99 @@ public class BenchMark extends javax.swing.JFrame {
 
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
+                                         
+    Coleta coleta = new Coleta();
 
-        Coleta coleta = new Coleta();
+    try {
+        // Chamar o método coletarStopWords
+        Set<String> stopWords = coleta.coletarStopWords();
 
-        try {
-            // Chamar o método coletarStopWords
-            Set<String> stopWords = coleta.coletarStopWords();
+        // Chamar o método coletarPalavras
+        ArrayList<String> palavras = coleta.coletarPalavras();
 
-            // Chamar o método coletarPalavras
-            ArrayList<String> palavras = coleta.coletarPalavras();
+        // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
+        ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
 
-            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-            ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+        // Por exemplo, você pode imprimir as palavras limpas no console:
+        ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
 
-            // Por exemplo, você pode imprimir as palavras limpas no console:
-            ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
-
-            ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
-            // Agora você pode imprimir a frequência das palavras
-            for (FrequenciaPalavra freq : frequencia) {
-                jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
-            }
-            // Instanciar a árvore AVL
-            ArvoreAVL arvoreAVL = new ArvoreAVL();
-
-// Adicionar palavras limpas à árvore
-            //ini
-            long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
-            arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
-
-            //fim
-            long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
-            long arvoreAVLTempo = endTimeAVL - startTimeAVL;
-            int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
-            String info = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
-            jTextAreaRelatorioArvoreAVL.append(info);
-
-            Arvore arvore = new Arvore();
-            //ini
-            long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
-            arvore.addPalavrasLimpasArvore(palavrasLimpas);
-            //fim
-            long endTime = System.currentTimeMillis(); // Registrar o tempo final
-            long arvoreTempo = endTime - startTime;
-            int comparações = arvore.comparacoesArvore;
-            
-            String info2 = comparações + " comparações\n" + arvoreTempo + " milissegundos";
-            jTextAreaRelatorioArvore.append(info2);
-
-            BuscaBinaria2 busca = new BuscaBinaria2();
-            
-            busca.InserirVetorDinamico(palavrasLimpas);
-            int comparacoesBusca= busca.comparacoesBuscaBinaria;
-            String info4 = (comparacoesBusca) + " comparações\n";
-
-            //ini
-            long startTimeVetor = System.currentTimeMillis(); // Registrar o tempo inicial
-            busca.InserirVetorDinamico(palavrasLimpas);
-            //fim
-            long endTimeVetor = System.currentTimeMillis(); // Registrar o tempo final
-            long vetorTempo = endTimeVetor - startTimeVetor;
-
-            String info3 = vetorTempo + " milesegundos";
-            jTextAreaRelatorioBuscaBinaria.append(info4 + info3);
-
-            ArrayList<String> vetorDinamico = new ArrayList<>();
-            for (String palavra : palavrasLimpas) {
-                if (!vetorDinamico.contains(palavra)) {
-                    vetorDinamico.add(palavra);
-                }
-            }
-
-            // Imprimir os elementos do vetor dinâmico na tela
-           // for (String palavra : vetorDinamico) {
-          //      System.out.println(palavra);
-           // }
-
-            System.out.println("Arvore AVL");
-            arvoreAVL.printAVLTree();
-            System.out.println("");
-            System.out.println("Arvore Não Balanceada");
-            arvore.printTree();
-
-        } catch (IOException e) {
+        ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
+        
+        // Limpar o conteúdo do jTextAreaRelatorioFrequencia
+        jTextAreaRelatorioFrequencia.setText("");
+        
+        // Exibir a frequência das palavras no jTextAreaRelatorioFrequencia
+        for (FrequenciaPalavra freq : frequencia) {
+            jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
         }
+
+        // Instanciar a árvore AVL
+        ArvoreAVL arvoreAVL = new ArvoreAVL();
+
+        // Adicionar palavras limpas à árvore AVL
+        long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
+        arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
+        long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
+        long arvoreAVLTempo = endTimeAVL - startTimeAVL;
+        int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
+        String info = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
+        jTextAreaRelatorioArvoreAVL.setText(info);
+
+        // Instanciar a árvore não balanceada
+        Arvore arvore = new Arvore();
+
+        // Adicionar palavras limpas à árvore não balanceada
+        long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
+        arvore.addPalavrasLimpasArvore(palavrasLimpas);
+        long endTime = System.currentTimeMillis(); // Registrar o tempo final
+        long arvoreTempo = endTime - startTime;
+        int comparacoes = arvore.comparacoesArvore;
+        String info2 = comparacoes + " comparações\n" + arvoreTempo + " milissegundos";
+        jTextAreaRelatorioArvore.setText(info2);
+
+        // Inicializar a busca binária
+        BuscaBinaria2 busca = new BuscaBinaria2();
+
+        // Inserir palavras limpas na busca binária
+        busca.InserirVetorDinamico(palavrasLimpas);
+        int comparacoesBusca = busca.comparacoesBuscaBinaria;
+        String info4 = (comparacoesBusca) + " comparações\n";
+
+        // Medir o tempo da busca binária
+        long startTimeVetor = System.currentTimeMillis(); // Registrar o tempo inicial
+        busca.InserirVetorDinamico(palavrasLimpas);
+        long endTimeVetor = System.currentTimeMillis(); // Registrar o tempo final
+        long vetorTempo = endTimeVetor - startTimeVetor;
+
+        String info3 = vetorTempo + " milissegundos";
+        jTextAreaRelatorioBuscaBinaria.setText(info4 + info3);
+
+        // Construir um vetor dinâmico sem duplicatas
+        ArrayList<String> vetorDinamico = new ArrayList<>();
+        for (String palavra : palavrasLimpas) {
+            if (!vetorDinamico.contains(palavra)) {
+                vetorDinamico.add(palavra);
+            }
+        }
+
+        // Imprimir os elementos do vetor dinâmico na tela
+        System.out.println("Palavras únicas no vetor dinâmico:");
+        for (String palavra : vetorDinamico) {
+            System.out.println(palavra);
+        }
+
+        // Imprimir a árvore AVL
+        System.out.println("Arvore AVL:");
+        arvoreAVL.printAVLTree();
+
+        // Imprimir a árvore não balanceada
+        System.out.println("\nArvore Não Balanceada:");
+        arvore.printTree();
+
+    } catch (IOException e) {
+        // Lidar com exceções, se necessário
+    }
+
 
     }//GEN-LAST:event_jButtonImportarActionPerformed
 
