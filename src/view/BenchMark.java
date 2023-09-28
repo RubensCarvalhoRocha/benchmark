@@ -7,6 +7,8 @@ import bo.Coleta;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
 import estruturas.BuscaBinaria2;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BenchMark extends javax.swing.JFrame {
 
@@ -176,99 +178,107 @@ public class BenchMark extends javax.swing.JFrame {
 
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
+Coleta coleta = new Coleta();
 
-        Coleta coleta = new Coleta();
+try {
+    // Chamar o método coletarStopWords
+    Set<String> stopWords = coleta.coletarStopWords();
 
-        try {
-            // Chamar o método coletarStopWords
-            Set<String> stopWords = coleta.coletarStopWords();
+    // Chamar o método coletarPalavrasLimpas
+    ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
 
-            // Chamar o método coletarPalavrasLimpas
-            ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
+    // Instanciar a árvore AVL
+    ArvoreAVL arvoreAVL = new ArvoreAVL();
 
-            // Chamar o método removerStopWords, passando as palavras coletadas e as stop words como argumentos
-   //         ArrayList<String> palavrasLimpas = coleta.removerStopWords(palavras, stopWords);
+    // Adicionar palavras limpas à árvore AVL
+    long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
+    arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
 
-            // Por exemplo, você pode imprimir as palavras limpas no console:
-         //   ArrayList<String> palavrasLimpasOrdenadas = coleta.obterPalavrasLimpasOrdenadas(palavrasLimpas);
+    // Registrar o tempo final
+    long endTimeAVL = System.currentTimeMillis();
+    long arvoreAVLTempo = endTimeAVL - startTimeAVL;
 
-         
-         //ORDENADAS
-       //     ArrayList<FrequenciaPalavra> frequencia = coleta.contarFrequencia(palavrasLimpasOrdenadas);
-            // Agora você pode imprimir a frequência das palavras
-   //         for (FrequenciaPalavra freq : frequencia) {
-  //             jTextAreaRelatorioFrequencia.append(freq.getPalavra() + ": " + freq.getFrequencia() + "\n");
-   //         }
-            // Instanciar a árvore AVL
-            ArvoreAVL arvoreAVL = new ArvoreAVL();
+    // Obter o número de comparações feitas na árvore AVL
+    int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
 
-// Adicionar palavras limpas à árvore
-            //ini
-            long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
-            arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
+    // Criar uma string com informações sobre a árvore AVL
+    String infoAVL = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
 
-            //fim
-            long endTimeAVL = System.currentTimeMillis(); // Registrar o tempo final
-            long arvoreAVLTempo = endTimeAVL - startTimeAVL;
-            int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
-            String info = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
-            jTextAreaRelatorioArvoreAVL.append(info);
+    // Atualizar o texto no componente jTextAreaRelatorioArvoreAVL
+    jTextAreaRelatorioArvoreAVL.setText(infoAVL);
 
-            Arvore arvore = new Arvore();
-            //ini
-            long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
-            arvore.addPalavrasLimpasArvore(palavrasLimpas);
-            //fim
-            long endTime = System.currentTimeMillis(); // Registrar o tempo final
-            long arvoreTempo = endTime - startTime;
-            int comparações = arvore.comparacoesArvore;
-            
-            String info2 = comparações + " comparações\n" + arvoreTempo + " milissegundos";
-            jTextAreaRelatorioArvore.append(info2);
+    // Instanciar a árvore não balanceada
+    Arvore arvore = new Arvore();
 
-            BuscaBinaria2 busca = new BuscaBinaria2();
-            
-            busca.InserirVetorDinamico(palavrasLimpas);
-            int comparacoesBusca= busca.comparacoesBuscaBinaria;
-            String info4 = (comparacoesBusca) + " comparações\n";
+    // Adicionar palavras limpas à árvore não balanceada
+    long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
+    arvore.addPalavrasLimpasArvore(palavrasLimpas);
 
-            //ini
-            long startTimeVetor = System.currentTimeMillis(); // Registrar o tempo inicial
-            busca.InserirVetorDinamico(palavrasLimpas);
-            //fim
-            long endTimeVetor = System.currentTimeMillis(); // Registrar o tempo final
-            long vetorTempo = endTimeVetor - startTimeVetor;
+    // Registrar o tempo final
+    long endTime = System.currentTimeMillis();
+    long arvoreTempo = endTime - startTime;
 
-            String info3 = vetorTempo + " milesegundos";
-            jTextAreaRelatorioBuscaBinaria.append(info4 + info3);
+    // Obter o número de comparações feitas na árvore não balanceada
+    int comparacoesArvore = arvore.comparacoesArvore;
 
-            
-            //Oque é isso aqui??
-            //ArrayList<String> vetorDinamico = new ArrayList<>();
-           // for (String palavra : palavrasLimpas) {
-            //    if (!vetorDinamico.contains(palavra)) {
-            //        vetorDinamico.add(palavra);
-            //    }
-            //}
+    // Criar uma string com informações sobre a árvore não balanceada
+    String infoArvore = comparacoesArvore + " comparações\n" + arvoreTempo + " milissegundos";
 
-            
-            
-            // Imprimir os elementos do vetor dinâmico na tela
-           // for (String palavra : vetorDinamico) {
-          //      System.out.println(palavra);
-           // }
+    // Atualizar o texto no componente jTextAreaRelatorioArvore
+    jTextAreaRelatorioArvore.setText(infoArvore);
 
-            System.out.println("Arvore AVL");
-            arvoreAVL.printAVLTree();
-            System.out.println("");
-            System.out.println("Arvore Não Balanceada");
-            arvore.printTree();
+    // Instanciar a estrutura de busca binária
+    BuscaBinaria2 busca = new BuscaBinaria2();
 
-        } catch (IOException e) {
-        }
+    // Inserir palavras limpas na estrutura de busca binária
+    busca.InserirVetorDinamico(palavrasLimpas);
+
+    // Obter o número de comparações feitas na busca binária
+    int comparacoesBusca = busca.comparacoesBuscaBinaria;
+
+    // Criar uma string com informações sobre a busca binária
+    String infoBusca = (comparacoesBusca) + " comparações\n";
+
+    // Inserir informações sobre o tempo de execução da busca binária na string
+    long startTimeVetor = System.currentTimeMillis(); // Registrar o tempo inicial
+    busca.InserirVetorDinamico(palavrasLimpas);
+    long endTimeVetor = System.currentTimeMillis(); // Registrar o tempo final
+    long vetorTempo = endTimeVetor - startTimeVetor;
+    infoBusca += vetorTempo + " milissegundos";
+
+    // Atualizar o texto no componente jTextAreaRelatorioBuscaBinaria
+    jTextAreaRelatorioBuscaBinaria.setText(infoBusca);
+
+    // Calcular e mostrar a frequência das palavras em jTextAreaRelatorioFrequencia
+    Map<String, Integer> frequenciaPalavras = new HashMap<>();
+
+    for (String palavra : palavrasLimpas) {
+        frequenciaPalavras.put(palavra, frequenciaPalavras.getOrDefault(palavra, 0) + 1);
+    }
+
+    StringBuilder frequenciaText = new StringBuilder();
+    for (Map.Entry<String, Integer> entry : frequenciaPalavras.entrySet()) {
+        frequenciaText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+    }
+
+    // Atualizar o texto no componente jTextAreaRelatorioFrequencia
+    jTextAreaRelatorioFrequencia.setText(frequenciaText.toString());
+
+    // Imprimir a árvore AVL no console
+    System.out.println("Arvore AVL");
+    arvoreAVL.printAVLTree();
+    System.out.println("");
+
+    // Imprimir a árvore não balanceada no console
+    System.out.println("Arvore Não Balanceada");
+    arvore.printTree();
+
+} catch (IOException e) {
+    // Trate exceções aqui, se necessário
+}
 
     }//GEN-LAST:event_jButtonImportarActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
