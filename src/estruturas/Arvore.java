@@ -1,9 +1,8 @@
 package estruturas;
 
 import bo.Coleta;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
+
 
 public class Arvore {
 

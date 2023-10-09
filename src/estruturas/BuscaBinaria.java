@@ -1,12 +1,9 @@
 package estruturas;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
-import bo.Coleta;
 import java.util.Collections;
 
-public class BuscaBinaria2 {
+public class BuscaBinaria {
     
     public static int comparacoesBuscaBinaria = 0;
  

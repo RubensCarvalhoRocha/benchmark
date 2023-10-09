@@ -6,7 +6,7 @@ import java.util.Set;
 import bo.Coleta;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
-import estruturas.BuscaBinaria2;
+import estruturas.BuscaBinaria;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -178,104 +178,65 @@ public class BenchMark extends javax.swing.JFrame {
 
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
-Coleta coleta = new Coleta();
 
 try {
-    // Chamar o método coletarStopWords
-    Set<String> stopWords = coleta.coletarStopWords();
+        Coleta coleta = new Coleta();
+        Set<String> stopWords = coleta.coletarStopWords();
+        ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
 
-    // Chamar o método coletarPalavrasLimpas
-    ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
+        // Árvore AVL
+        ArvoreAVL arvoreAVL = new ArvoreAVL();
+        long startTimeAVL = System.currentTimeMillis();
+        arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
+        long endTimeAVL = System.currentTimeMillis();
+        long arvoreAVLTempo = endTimeAVL - startTimeAVL;
+        int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
+        String infoAVL = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
+        jTextAreaRelatorioArvoreAVL.setText(infoAVL);
 
-    // Instanciar a árvore AVL
-    ArvoreAVL arvoreAVL = new ArvoreAVL();
+        // Árvore não balanceada
+        Arvore arvore = new Arvore();
+        long startTime = System.currentTimeMillis();
+        arvore.addPalavrasLimpasArvore(palavrasLimpas);
+        long endTime = System.currentTimeMillis();
+        long arvoreTempo = endTime - startTime;
+        int comparacoesArvore = arvore.comparacoesArvore;
+        String infoArvore = comparacoesArvore + " comparações\n" + arvoreTempo + " milissegundos";
+        jTextAreaRelatorioArvore.setText(infoArvore);
 
-    // Adicionar palavras limpas à árvore AVL
-    long startTimeAVL = System.currentTimeMillis(); // Registrar o tempo inicial
-    arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
+        // Busca binária
+        BuscaBinaria busca = new BuscaBinaria();
+        long startTimeVetor = System.currentTimeMillis();
+        busca.InserirVetorDinamico(palavrasLimpas);
+        long endTimeVetor = System.currentTimeMillis();
+        int comparacoesBusca = busca.comparacoesBuscaBinaria;
+        String infoBusca = comparacoesBusca + " comparações\n" + (endTimeVetor - startTimeVetor) + " milissegundos";
+        jTextAreaRelatorioBuscaBinaria.setText(infoBusca);
 
-    // Registrar o tempo final
-    long endTimeAVL = System.currentTimeMillis();
-    long arvoreAVLTempo = endTimeAVL - startTimeAVL;
+        // Frequência das palavras
+        Map<String, Integer> frequenciaPalavras = new HashMap<>();
+        for (String palavra : palavrasLimpas) {
+            frequenciaPalavras.put(palavra, frequenciaPalavras.getOrDefault(palavra, 0) + 1);
+        }
 
-    // Obter o número de comparações feitas na árvore AVL
-    int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
+        StringBuilder frequenciaText = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : frequenciaPalavras.entrySet()) {
+            frequenciaText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
 
-    // Criar uma string com informações sobre a árvore AVL
-    String infoAVL = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
+        jTextAreaRelatorioFrequencia.setText(frequenciaText.toString());
 
-    // Atualizar o texto no componente jTextAreaRelatorioArvoreAVL
-    jTextAreaRelatorioArvoreAVL.setText(infoAVL);
+        // Impressões no console
+        System.out.println("Árvore AVL");
+        arvoreAVL.printAVLTree();
+        System.out.println("");
 
-    // Instanciar a árvore não balanceada
-    Arvore arvore = new Arvore();
+        System.out.println("Árvore Não Balanceada");
+        arvore.printTree();
 
-    // Adicionar palavras limpas à árvore não balanceada
-    long startTime = System.currentTimeMillis(); // Registrar o tempo inicial
-    arvore.addPalavrasLimpasArvore(palavrasLimpas);
-
-    // Registrar o tempo final
-    long endTime = System.currentTimeMillis();
-    long arvoreTempo = endTime - startTime;
-
-    // Obter o número de comparações feitas na árvore não balanceada
-    int comparacoesArvore = arvore.comparacoesArvore;
-
-    // Criar uma string com informações sobre a árvore não balanceada
-    String infoArvore = comparacoesArvore + " comparações\n" + arvoreTempo + " milissegundos";
-
-    // Atualizar o texto no componente jTextAreaRelatorioArvore
-    jTextAreaRelatorioArvore.setText(infoArvore);
-
-    // Instanciar a estrutura de busca binária
-    BuscaBinaria2 busca = new BuscaBinaria2();
-
-    // Inserir palavras limpas na estrutura de busca binária
-    busca.InserirVetorDinamico(palavrasLimpas);
-
-    // Obter o número de comparações feitas na busca binária
-    int comparacoesBusca = busca.comparacoesBuscaBinaria;
-
-    // Criar uma string com informações sobre a busca binária
-    String infoBusca = (comparacoesBusca) + " comparações\n";
-
-    // Inserir informações sobre o tempo de execução da busca binária na string
-    long startTimeVetor = System.currentTimeMillis(); // Registrar o tempo inicial
-    busca.InserirVetorDinamico(palavrasLimpas);
-    long endTimeVetor = System.currentTimeMillis(); // Registrar o tempo final
-    long vetorTempo = endTimeVetor - startTimeVetor;
-    infoBusca += vetorTempo + " milissegundos";
-
-    // Atualizar o texto no componente jTextAreaRelatorioBuscaBinaria
-    jTextAreaRelatorioBuscaBinaria.setText(infoBusca);
-
-    // Calcular e mostrar a frequência das palavras em jTextAreaRelatorioFrequencia
-    Map<String, Integer> frequenciaPalavras = new HashMap<>();
-
-    for (String palavra : palavrasLimpas) {
-        frequenciaPalavras.put(palavra, frequenciaPalavras.getOrDefault(palavra, 0) + 1);
+    } catch (IOException e) {
+        // Trate exceções aqui, se necessário
     }
-
-    StringBuilder frequenciaText = new StringBuilder();
-    for (Map.Entry<String, Integer> entry : frequenciaPalavras.entrySet()) {
-        frequenciaText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
-    }
-
-    // Atualizar o texto no componente jTextAreaRelatorioFrequencia
-    jTextAreaRelatorioFrequencia.setText(frequenciaText.toString());
-
-    // Imprimir a árvore AVL no console
-    System.out.println("Arvore AVL");
-    arvoreAVL.printAVLTree();
-    System.out.println("");
-
-    // Imprimir a árvore não balanceada no console
-    System.out.println("Arvore Não Balanceada");
-    arvore.printTree();
-
-} catch (IOException e) {
-    // Trate exceções aqui, se necessário
-}
 
     }//GEN-LAST:event_jButtonImportarActionPerformed
     
@@ -283,17 +244,6 @@ try {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
-        //Validando as Arvores:S
-        /*Arvore arvore = new Arvore();
-        ArvoreAVL arvoreAvl = new ArvoreAVL();
-        System.out.println("Arvore AVL");
-        arvore.addPalavrasLimpasArvore();
-        arvore.printTree();
-        System.out.println("---------------");
-        System.out.println("Arvore Não Balanceada");
-        arvoreAvl.addPalavrasLimpasArvoreAVL();
-        arvoreAvl.printAVLTree();*/
 
  /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

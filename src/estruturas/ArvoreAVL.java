@@ -1,12 +1,8 @@
 package estruturas;
 
 import bo.Coleta;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
-import javax.swing.JTextArea;
-
-public class ArvoreAVL {
+    public class ArvoreAVL {
 
     public int comparacoesArvoreAVL = 0;
 
