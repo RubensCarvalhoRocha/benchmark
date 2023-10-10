@@ -527,7 +527,7 @@ public class RedBlackTree<T extends Comparable<T>>{
 
         // While we haven't reached the end of the tree
         while (!isNil(current)) {
-
+            comparacoesRedBlackTree = comparacoesRedBlackTree + 1;
             // If we have found a node with a key equal to key
             if (current.key.equals(key)) // return that node and exit search(int)
             {
