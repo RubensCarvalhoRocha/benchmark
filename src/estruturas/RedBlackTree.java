@@ -13,6 +13,8 @@ public class RedBlackTree<T extends Comparable<T>>{
     private RedBlackNode<T> nil = new RedBlackNode<T>();
     private RedBlackNode<T> root = nil;
 
+        public int comparacoesRedBlackTree = 0;
+    
     public RedBlackTree() {
         root.left = nil;
         root.right = nil;
@@ -632,21 +634,23 @@ public class RedBlackTree<T extends Comparable<T>>{
 
     }// end findNumSmaller(RedBlackNode nod, int key)
     
-    // Método para imprimir a árvore
-    public void printTree() {
-        printTree(root, 0);
-    }
+   private void printTree(RedBlackNode<T> node, String prefix, boolean isLeft, int depth) {
+    if (!isNil(node)) {
+        System.out.print(prefix);
+        System.out.print(isLeft ? "├── " : "└── ");
+        System.out.print(node.key + " (" + (node.color == RedBlackNode.RED ? "RED" : "BLACK") + ")\n");
 
-    private void printTree(RedBlackNode<T> node, int level) {
-        if (!isNil(node)) {
-            printTree(node.right, level + 1);
-            for (int i = 0; i < level; i++) {
-                System.out.print("    ");
-            }
-            System.out.println(node.key);
-            printTree(node.left, level + 1);
-        }
+        String childPrefix = prefix + (isLeft ? "│   " : "    ");
+        printTree(node.left, childPrefix, true, depth + 1);
+        printTree(node.right, childPrefix, false, depth + 1);
     }
+}
+
+public void printTree() {
+    System.out.println("Árvore Red-Black:");
+    printTree(root, "", false, 0);
+}
+
     
    
     
@@ -678,8 +682,11 @@ public class RedBlackTree<T extends Comparable<T>>{
         RedBlackNode<String> resultadoBusca = redBlackTree.search(palavraLimpa);
         if (resultadoBusca == null) {
             redBlackTree.insert(palavraLimpa);
+            
+            
         }
     }
+    redBlackTree.printTree();
 }
 
     
