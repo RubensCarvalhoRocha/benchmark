@@ -239,5 +239,22 @@ public class BTreeNome {
 
         bTree.printTree();
     }
+    
+  /*
+    public void addPalavrasLimpasRedBlackTree(ArrayList<String> palavrasLimpas) {
+    RedBlackTree<String> redBlackTree = new RedBlackTree<>();
+
+    for (String palavraLimpa : palavrasLimpas) {
+        RedBlackNode<String> resultadoBusca = redBlackTree.search(palavraLimpa);
+        if (resultadoBusca == null) {
+            redBlackTree.insert(palavraLimpa);
+            
+            
+        }
+    }
+    redBlackTree.printTree();
+}
+*/
+    
 }
 
