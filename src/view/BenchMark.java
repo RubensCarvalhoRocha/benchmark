@@ -275,7 +275,11 @@ try {
 
         System.out.println("Árvore Não Balanceada");
         arvore.printTree();
+        System.out.println("");
         
+
+        redBlackTree.printTree();
+       System.out.println("");
 
     } catch (IOException e) {
         // Trate exceções aqui, se necessário
