@@ -4,9 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/bo/Coleta.java</file>
+            <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/BTree.java</file>
             <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/view/BenchMark.java</file>
             <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/Arquivos/stopwords.txt</file>
-            <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/BuscaBinaria2.java</file>
+            <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/SearchResult.java</file>
+            <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/RedBlackNode.java</file>
+            <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/RedBlackTree.java</file>
+            <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/BuscaBinaria.java</file>
             <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/ArvoreAVL.java</file>
             <file>file:/C:/Users/arthu/OneDrive/Documentos/Trabalho_luizmario/benchmark/src/estruturas/Arvore.java</file>
         </group>

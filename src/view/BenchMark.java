@@ -6,9 +6,11 @@ import java.util.Set;
 import bo.Coleta;
 import estruturas.Arvore;
 import estruturas.ArvoreAVL;
+import estruturas.BTree;
 import estruturas.BuscaBinaria;
 import estruturas.RedBlackTree;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BenchMark extends javax.swing.JFrame {
@@ -211,88 +213,96 @@ public class BenchMark extends javax.swing.JFrame {
 
     private void jButtonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarActionPerformed
 
-try {
-        Coleta coleta = new Coleta();
-        Set<String> stopWords = coleta.coletarStopWords();
-        ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
+        try {
+            Coleta coleta = new Coleta();
+            Set<String> stopWords = coleta.coletarStopWords();
+            ArrayList<String> palavrasLimpas = coleta.coletarPalavrasLimpas(stopWords);
 
-        // Árvore AVL
-        ArvoreAVL arvoreAVL = new ArvoreAVL();
-        long startTimeAVL = System.currentTimeMillis();
-        arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
-        long endTimeAVL = System.currentTimeMillis();
-        long arvoreAVLTempo = endTimeAVL - startTimeAVL;
-        int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
-        String infoAVL = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
-        jTextAreaRelatorioArvoreAVL.setText(infoAVL);
+            // Árvore AVL
+            ArvoreAVL arvoreAVL = new ArvoreAVL();
+            long startTimeAVL = System.currentTimeMillis();
+            arvoreAVL.addPalavrasLimpasArvoreAVL(palavrasLimpas);
+            long endTimeAVL = System.currentTimeMillis();
+            long arvoreAVLTempo = endTimeAVL - startTimeAVL;
+            int comparacoesAVL = arvoreAVL.comparacoesArvoreAVL;
+            String infoAVL = comparacoesAVL + " comparações\n" + arvoreAVLTempo + " milissegundos";
+            jTextAreaRelatorioArvoreAVL.setText(infoAVL);
 
-        // Árvore não balanceada
-        Arvore arvore = new Arvore();
-        long startTime = System.currentTimeMillis();
-        arvore.addPalavrasLimpasArvore(palavrasLimpas);
-        long endTime = System.currentTimeMillis();
-        long arvoreTempo = endTime - startTime;
-        int comparacoesArvore = arvore.comparacoesArvore;
-        String infoArvore = comparacoesArvore + " comparações\n" + arvoreTempo + " milissegundos";
-        jTextAreaRelatorioArvore.setText(infoArvore);
+            // Árvore não balanceada
+            Arvore arvore = new Arvore();
+            long startTime = System.currentTimeMillis();
+            arvore.addPalavrasLimpasArvore(palavrasLimpas);
+            long endTime = System.currentTimeMillis();
+            long arvoreTempo = endTime - startTime;
+            int comparacoesArvore = arvore.comparacoesArvore;
+            String infoArvore = comparacoesArvore + " comparações\n" + arvoreTempo + " milissegundos";
+            jTextAreaRelatorioArvore.setText(infoArvore);
 
-        // Árvore RubroNegra
-        
-        RedBlackTree redBlackTree = new RedBlackTree();
-        long startTimeRedBlackTree = System.currentTimeMillis();
-        redBlackTree.addPalavrasLimpasRedBlackTree(palavrasLimpas);
-        long endTimeRedBlackTree = System.currentTimeMillis();
-        long RedBlackTreeTempo = endTimeRedBlackTree - startTimeRedBlackTree;
-        int comparacoesRedBlackTree = redBlackTree.comparacoesRedBlackTree;
-      //  String infoRedBlackTree =  RedBlackTreeTempo + " milissegundos";
-       
-        String infoRedBlackTree = comparacoesRedBlackTree + " comparações\n" + RedBlackTreeTempo + " milissegundos";
-       
-       jTextAreaRubroNegra.setText(infoRedBlackTree);    
-            
-        // Busca binária
-        BuscaBinaria busca = new BuscaBinaria();
-        long startTimeVetor = System.currentTimeMillis();
-        busca.InserirVetorDinamico(palavrasLimpas);
-        long endTimeVetor = System.currentTimeMillis();
-        int comparacoesBusca = busca.comparacoesBuscaBinaria;
-        String infoBusca = comparacoesBusca + " comparações\n" + (endTimeVetor - startTimeVetor) + " milissegundos";
-        jTextAreaRelatorioBuscaBinaria.setText(infoBusca);
+            // Árvore RubroNegra
+            RedBlackTree redBlackTree = new RedBlackTree();
+            long startTimeRedBlackTree = System.currentTimeMillis();
+            redBlackTree.addPalavrasLimpasRedBlackTree(palavrasLimpas);
+            long endTimeRedBlackTree = System.currentTimeMillis();
+            long RedBlackTreeTempo = endTimeRedBlackTree - startTimeRedBlackTree;
+            int comparacoesRedBlackTree = redBlackTree.comparacoesRedBlackTree;
+            //  String infoRedBlackTree =  RedBlackTreeTempo + " milissegundos";
 
-        // Frequência das palavras
-        Map<String, Integer> frequenciaPalavras = new HashMap<>();
-        for (String palavra : palavrasLimpas) {
-            frequenciaPalavras.put(palavra, frequenciaPalavras.getOrDefault(palavra, 0) + 1);
+            //Arvore Btree 
+            BTree tree = new BTree(6);
+            long startTimeBTree = System.currentTimeMillis();
+            tree.addPalavrasLimpasBtree(palavrasLimpas);
+            long endTimeBTree = System.currentTimeMillis();
+            int comparacoesBTree = tree.getComparisons();
+            long BTreeTempo = endTimeBTree - startTimeBTree;
+            String infoBTree = comparacoesBTree + " comparações\n" + BTreeTempo + " milissegundos";
+            jTextAreaBB.setText(infoBTree);
+
+            String infoRedBlackTree = comparacoesRedBlackTree + " comparações\n" + RedBlackTreeTempo + " milissegundos";
+
+            jTextAreaRubroNegra.setText(infoRedBlackTree);
+
+            // Busca binária
+            BuscaBinaria busca = new BuscaBinaria();
+            long startTimeVetor = System.currentTimeMillis();
+            busca.InserirVetorDinamico(palavrasLimpas);
+            long endTimeVetor = System.currentTimeMillis();
+            int comparacoesBusca = busca.comparacoesBuscaBinaria;
+            String infoBusca = comparacoesBusca + " comparações\n" + (endTimeVetor - startTimeVetor) + " milissegundos";
+            jTextAreaRelatorioBuscaBinaria.setText(infoBusca);
+
+            // Frequência das palavras
+            Map<String, Integer> frequenciaPalavras = new HashMap<>();
+            for (String palavra : palavrasLimpas) {
+                frequenciaPalavras.put(palavra, frequenciaPalavras.getOrDefault(palavra, 0) + 1);
+            }
+
+            StringBuilder frequenciaText = new StringBuilder();
+            for (Map.Entry<String, Integer> entry : frequenciaPalavras.entrySet()) {
+                frequenciaText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+
+            jTextAreaRelatorioFrequencia.setText(frequenciaText.toString());
+
+            // Impressões no console
+            System.out.println("Árvore AVL");
+            arvoreAVL.printAVLTree();
+            System.out.println("");
+
+            System.out.println("Árvore Não Balanceada");
+            arvore.printTree();
+
+        } catch (IOException e) {
+            // Trate exceções aqui, se necessário
         }
-
-        StringBuilder frequenciaText = new StringBuilder();
-        for (Map.Entry<String, Integer> entry : frequenciaPalavras.entrySet()) {
-            frequenciaText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
-        }
-
-        jTextAreaRelatorioFrequencia.setText(frequenciaText.toString());
-
-        // Impressões no console
-        System.out.println("Árvore AVL");
-        arvoreAVL.printAVLTree();
-        System.out.println("");
-
-        System.out.println("Árvore Não Balanceada");
-        arvore.printTree();
-        
-
-    } catch (IOException e) {
-        // Trate exceções aqui, se necessário
-    }
 
     }//GEN-LAST:event_jButtonImportarActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
 
- /* Set the Nimbus look and feel */
+        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

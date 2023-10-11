@@ -9,27 +9,41 @@ package estruturas;
  * @author aluno
  */
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-class TreeNode {
-    ArrayList<String> keys;
-    ArrayList<TreeNode> childPointers;
-    boolean isLeaf;
 
-    public TreeNode(boolean isLeaf) {
-        this.isLeaf = isLeaf;
-        keys = new ArrayList<>();
-        childPointers = new ArrayList<>();
-    }
-}
 
-public class BTreeNome {
+public class BTree {
+    public int comparisons; // Adicione este campo
+
+
     private TreeNode root;
     private int t; // Ordem da árvore B
 
-    public BTreeNome(int t) {
+    class TreeNode {
+
+        ArrayList<String> keys;
+        ArrayList<TreeNode> childPointers;
+        boolean isLeaf;
+
+        public TreeNode(boolean isLeaf) {
+            this.isLeaf = isLeaf;
+            keys = new ArrayList<>();
+            childPointers = new ArrayList<>();
+        }
+    }
+    Map<String, SearchResult> mapa = new HashMap<>();
+
+    public BTree(int t) {
         this.t = t;
         root = new TreeNode(true);
         root.keys.add(""); // Inicializa com uma chave fictícia (vazia)
+        comparisons = 0; // Inicialize o contador
+    }
+    public int getComparisons() {
+        return comparisons;
     }
 
     public void insert(String key) {
@@ -69,6 +83,7 @@ public class BTreeNome {
     }
 
     private void splitChild(TreeNode parentNode, int index) {
+        
         TreeNode nodeToSplit = parentNode.childPointers.get(index);
         TreeNode newChild = new TreeNode(nodeToSplit.isLeaf);
         parentNode.keys.add(index, nodeToSplit.keys.get(t - 1));
@@ -94,6 +109,7 @@ public class BTreeNome {
         int i = 0;
         while (i < node.keys.size() && key.compareTo(node.keys.get(i)) > 0) {
             i++;
+             comparisons++; // Incrementa o contador de comparações
         }
         if (i < node.keys.size() && key.equals(node.keys.get(i))) {
             return true;
@@ -121,8 +137,7 @@ public class BTreeNome {
             // Caso 1: A chave está na folha
             if (node.isLeaf) {
                 node.keys.remove(i);
-            }
-            // Caso 2: A chave está em um nó interno
+            } // Caso 2: A chave está em um nó interno
             else {
                 // Substitua a chave a ser excluída pela chave predecessora/sucessora
                 // e exclua a chave predecessora/sucessora do nó filho apropriado
@@ -219,42 +234,83 @@ public class BTreeNome {
         }
     }
 
+    public int readTxt(List<String> wordsList) {
+        int cont = 0;
+
+        for (String word : wordsList) {
+            if (!word.isEmpty()) {
+                SearchResult sr = searchAlphabetical(word);
+                if (sr.isSearch() == false) {
+                    insert(word);
+                    sr.setWord(word);
+                    sr.setOccurrences(1);
+                    mapa.put(word, sr);
+                    cont += sr.getComparisons();
+                } else {
+                    sr = mapa.get(word);
+                    sr.setOccurrences(sr.getOccurrences() + 1);
+                    mapa.put(word, sr);
+                    cont += mapa.get(word).getComparisons();
+                }
+            }
+        }
+
+        return cont;
+    }
+
+    public SearchResult searchAlphabetical(String word) {
+        return searchAlphabetical(root, word, new SearchResult(0, 0));
+    }
+
+    private SearchResult searchAlphabetical(BTree.TreeNode node, String word, SearchResult result) {
+        if (node == null) {
+            return result;
+        }
+        result = new SearchResult(result.getComparisons() + 1, false);
+        
+
+        int i = 0;
+        while (i < node.keys.size() && word.compareTo(node.keys.get(i)) > 0) {
+            i++;
+        }
+
+        if (i < node.keys.size() && word.equals(node.keys.get(i))) {
+            result.setSearch(true);
+            return result;
+        } else if (node.childPointers != null && i < node.childPointers.size()) {
+            return searchAlphabetical(node.childPointers.get(i), word, result);
+        } else {
+            return result;
+        }
+    }
+
     public void printTree() {
         printTree(root, "", true);
     }
-
-    public static void main(String[] args) {
-        BTreeNome bTree = new BTreeNome(4); // Ordem da árvore B igual a 3
-
-        String[] keys = {"apple", "banana", "cherry", "date", "fig", "grape", "kiwi", "lemon", "mango", "orange", "pear", "quince", "strawberry", "tomato", "watermelon"};
-        for (String key : keys) {
-            bTree.insert(key);
+      public void addPalavrasLimpasBtree(ArrayList<String> palavrasLimpas) {
+        for (String palavraLimpa : palavrasLimpas) {
+            if (!search(palavraLimpa)) {
+                insert(palavraLimpa);
+            }
         }
 
-        bTree.delete("date");
-        bTree.delete("banana");
-
-        System.out.println("Search 'date': " + bTree.search("fig"));
-        System.out.println("Search 'banana': " + bTree.search("grape"));
-
-        bTree.printTree();
+        // Após adicionar as palavras limpas, imprime a árvore.
+        System.out.println("Árvore B após adicionar palavras limpas:");
+        printTree(root, "", true);
     }
     
-  /*
-    public void addPalavrasLimpasRedBlackTree(ArrayList<String> palavrasLimpas) {
-    RedBlackTree<String> redBlackTree = new RedBlackTree<>();
+public static void main(String[] args) {
+    BTree tree = new BTree(2); // Crie uma Árvore B com ordem 2 (você pode alterar isso se desejar)
 
-    for (String palavraLimpa : palavrasLimpas) {
-        RedBlackNode<String> resultadoBusca = redBlackTree.search(palavraLimpa);
-        if (resultadoBusca == null) {
-            redBlackTree.insert(palavraLimpa);
-            
-            
-        }
-    }
-    redBlackTree.printTree();
-}
-*/
-    
+    ArrayList<String> palavrasLimpas = new ArrayList<>();
+    palavrasLimpas.add("apple");
+    palavrasLimpas.add("banana");
+    palavrasLimpas.add("cherry");
+    palavrasLimpas.add("apple");
+
+    int comparacoes = tree.readTxt(palavrasLimpas); // Use a função readTxt
+
+    System.out.println("Número de comparações: " + comparacoes);
 }
 
+}
