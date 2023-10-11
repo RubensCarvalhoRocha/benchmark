@@ -293,9 +293,7 @@ public class BTree {
                 insert(palavraLimpa);
             }
         }
-
         // Após adicionar as palavras limpas, imprime a árvore.
-        System.out.println("Árvore B após adicionar palavras limpas:");
         printTree(root, "", true);
     }
     
