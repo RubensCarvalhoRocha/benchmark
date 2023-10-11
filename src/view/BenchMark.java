@@ -237,19 +237,15 @@ try {
         jTextAreaRelatorioArvore.setText(infoArvore);
 
         // Árvore RubroNegra
-        
         RedBlackTree redBlackTree = new RedBlackTree();
         long startTimeRedBlackTree = System.currentTimeMillis();
         redBlackTree.addPalavrasLimpasRedBlackTree(palavrasLimpas);
         long endTimeRedBlackTree = System.currentTimeMillis();
         long RedBlackTreeTempo = endTimeRedBlackTree - startTimeRedBlackTree;
-        int comparacoesRedBlackTree = redBlackTree.comparacoesRedBlackTree;
-      //  String infoRedBlackTree =  RedBlackTreeTempo + " milissegundos";
-       
+        int comparacoesRedBlackTree = redBlackTree.comparacoesRedBlackTree; // Atualize o valor aqui
         String infoRedBlackTree = comparacoesRedBlackTree + " comparações\n" + RedBlackTreeTempo + " milissegundos";
-       
-       jTextAreaRubroNegra.setText(infoRedBlackTree);    
-            
+        jTextAreaRubroNegra.setText(infoRedBlackTree);
+ 
         // Busca binária
         BuscaBinaria busca = new BuscaBinaria();
         long startTimeVetor = System.currentTimeMillis();
