@@ -524,7 +524,7 @@ public class RedBlackTree<T extends Comparable<T>>{
     return find(root, key);
 }
 
-private RedBlackNode<T> find(RedBlackNode<T> current, T key) {
+public RedBlackNode<T> find(RedBlackNode<T> current, T key) {
     if (isNil(current)) {
         return null; // Key not found
     }
@@ -644,7 +644,9 @@ private RedBlackNode<T> find(RedBlackNode<T> current, T key) {
 public void printTree() {
     System.out.println("Árvore Red-Black:");
     printTree(root, "", false, 0);
+    System.out.println("");
    System.out.println("Comparações Arvore:  "+comparacoesRedBlackTree);
+    System.out.println("");
 }
 
     // @param: node, the RedBlackNode we must check to see whether it's nil

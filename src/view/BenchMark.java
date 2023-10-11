@@ -278,8 +278,8 @@ try {
         System.out.println("");
         
 
-        redBlackTree.printTree();
-       System.out.println("");
+      //  redBlackTree.printTree();
+     //  System.out.println("");
 
     } catch (IOException e) {
         // Trate exceções aqui, se necessário
