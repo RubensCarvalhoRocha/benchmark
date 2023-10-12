@@ -647,6 +647,10 @@ public void printTree() {
     System.out.println("Árvore Red-Black:");
     printTree(root, "", false, 0);
     System.out.println("");
+
+   System.out.println("Comparações Arvore:  "+comparacoesRedBlackTree);
+    System.out.println("");
+
 }
 
     // @param: node, the RedBlackNode we must check to see whether it's nil
