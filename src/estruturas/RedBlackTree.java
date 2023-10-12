@@ -312,7 +312,7 @@ public class RedBlackTree<T extends Comparable<T>>{
     // Remove's z from the RedBlackTree rooted at root
     public void remove(RedBlackNode<T> v) {
 
-        RedBlackNode<T> z = search(v.key);
+        RedBlackNode<T> z = find(v.key);
 
         // Declare variables
         RedBlackNode<T> x = nil;
@@ -520,31 +520,26 @@ public class RedBlackTree<T extends Comparable<T>>{
     // @return: returns a node with the key, key, if not found, returns null
     // Searches for a node with key k and returns the first such node, if no
     // such node is found returns null
-    public RedBlackNode<T> search(T key) {
+   public RedBlackNode<T> find(T key) {
+    return find(root, key);
+}
 
-        // Initialize a pointer to the root to traverse the tree
-        RedBlackNode<T> current = root;
+public RedBlackNode<T> find(RedBlackNode<T> current, T key) {
+    if (isNil(current)) {
+        return null; // Key not found
+    }
 
-        // While we haven't reached the end of the tree
-        while (!isNil(current)) {
-            comparacoesRedBlackTree = comparacoesRedBlackTree + 1;
-            // If we have found a node with a key equal to key
-            if (current.key.equals(key)) // return that node and exit search(int)
-            {
-                return current;
-            } // go left or right based on value of current and key
-            else if (current.key.compareTo(key) < 0) {
-                current = current.right;
-            } // go left or right based on value of current and key
-            else {
-                current = current.left;
-            }
-        }
-
-        // we have not found a node whose key is "key"
-        return null;
-
-    }// end search(int key)
+    int cmp = key.compareTo(current.key);
+    comparacoesRedBlackTree = comparacoesRedBlackTree + 1;
+    if (cmp < 0) {
+        return find(current.left, key); // Key is in the left subtree
+    } else if (cmp > 0) {
+        return find(current.right, key); // Key is in the right subtree
+    } else {
+        return current; // Key found
+    }
+}
+// end search(int key)
 
     // @param: key, any Comparable object
     // @return: return's the number of elements greater than key
@@ -647,13 +642,12 @@ public class RedBlackTree<T extends Comparable<T>>{
 }
 
 public void printTree() {
+    System.out.println("Comparações Arvore Rubro Negra:  "+comparacoesRedBlackTree);
+        System.out.println("");
     System.out.println("Árvore Red-Black:");
     printTree(root, "", false, 0);
+    System.out.println("");
 }
-
-    
-   
-    
 
     // @param: node, the RedBlackNode we must check to see whether it's nil
     // @return: return's true of node is nil and false otherwise
@@ -679,14 +673,14 @@ public void printTree() {
     RedBlackTree<String> redBlackTree = new RedBlackTree<>();
 
     for (String palavraLimpa : palavrasLimpas) {
-        RedBlackNode<String> resultadoBusca = redBlackTree.search(palavraLimpa);
+        RedBlackNode<String> resultadoBusca = redBlackTree.find(palavraLimpa);
         if (resultadoBusca == null) {
             redBlackTree.insert(palavraLimpa);
-            
-            
+     
         }
     }
     redBlackTree.printTree();
+        System.out.println("");
 }
 
     

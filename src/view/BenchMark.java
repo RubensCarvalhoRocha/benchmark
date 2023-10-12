@@ -245,7 +245,7 @@ public class BenchMark extends javax.swing.JFrame {
             long endTimeRedBlackTree = System.currentTimeMillis();
             long RedBlackTreeTempo = endTimeRedBlackTree - startTimeRedBlackTree;
             int comparacoesRedBlackTree = redBlackTree.comparacoesRedBlackTree;
-            //  String infoRedBlackTree =  RedBlackTreeTempo + " milissegundos";
+            String infoRedBlackTree = "Comp. no Terminal\n" + RedBlackTreeTempo + " milissegundos";
 
             //Arvore Btree 
             BTree tree = new BTree(6);
@@ -257,7 +257,6 @@ public class BenchMark extends javax.swing.JFrame {
             String infoBTree = comparacoesBTree + " comparações\n" + BTreeTempo + " milissegundos";
             jTextAreaBB.setText(infoBTree);
 
-            String infoRedBlackTree = comparacoesRedBlackTree + " comparações\n" + RedBlackTreeTempo + " milissegundos";
 
             jTextAreaRubroNegra.setText(infoRedBlackTree);
 
